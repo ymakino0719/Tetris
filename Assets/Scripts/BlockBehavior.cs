@@ -10,12 +10,12 @@ public class BlockBehavior : MonoBehaviour
 
     float waitTime = 1.0f;
 
-    float longPressTime_Hor = 0.0f;
-    float longPressTime_Ver = 0.0f;
-    float timeCoef_Hor = 0.0f;
-    float timeCoef_Ver = 1.0f;
-    float fastMoveCoef = 15.0f;
-    float maxPressTime = 0.8f;
+    float longPressTime_Hor = 0.0f; // 横方向キーの累積長押し時間
+    float longPressTime_Ver = 0.0f; // 縦方向キーの累積長押し時間
+    float timeCoef_Hor = 1.0f; // 横方向の長押し中の時間係数（加速前）
+    float timeCoef_Ver = 1.0f; // 縦方向の長押し中の時間係数（加速前）
+    float fastMoveCoef = 15.0f; // 長押し中の加速係数（加速後）
+    float maxPressTime = 0.8f; // 加速時間閾値
 
     Vector3 rightDir = new Vector3(1.0f, 0, 0);
     Vector3 leftDir = new Vector3(-1.0f, 0, 0);
@@ -52,16 +52,20 @@ public class BlockBehavior : MonoBehaviour
 
     void StackAndGenerateBlocks()
     {
-        GameObject stack = GameObject.Find("StackedBlocks");
-
         for (int j = 0; j < currentBlockList.Count; j++)
         {
             Vector3 vec = currentBlockList[j].transform.position;
-            bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)] = true;
-            currentBlockList[j].transform.parent = stack.transform;
-        } 
+            int x = Mathf.RoundToInt(vec.x);
+            int y = Mathf.RoundToInt(vec.y);
 
-        GameObject.Find("BlockGenerator").GetComponent<BlockGenerator>().GenerateNextBlock = true;
+            bL.Blocks[x, y] = true;
+
+            currentBlockList[j].transform.parent = bL.StackedLineList[y].transform;
+        }
+
+        var bM = GameObject.Find("BlockManager");
+        bM.GetComponent<BlockGenerator>().GenerateNextBlock = true;
+        bL.CheckDeleteLines();
 
         Destroy(this.gameObject);
     }
@@ -121,7 +125,7 @@ public class BlockBehavior : MonoBehaviour
         if (!normalRotate) rightRotate = RotatePossibility(rightDir);
         if (!normalRotate && !rightRotate) leftRotate = RotatePossibility(leftDir);
 
-        Debug.Log("normalRotate = " + normalRotate + ", rightRotate = " + rightRotate + ", leftRotate = " + leftRotate);
+        //Debug.Log("normalRotate = " + normalRotate + ", rightRotate = " + rightRotate + ", leftRotate = " + leftRotate);
 
         if (!normalRotate && !rightRotate && !leftRotate) return;
         else if(rightRotate) transform.position += rightDir;
