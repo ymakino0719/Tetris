@@ -7,34 +7,13 @@ public class BlockGenerator : MonoBehaviour
     static readonly int blockNum = 7;
     public GameObject[] blocks = new GameObject[blockNum];
 
-    bool generateNextBlock = false; // 現在のブロックを落とし終えて、次のブロックを生成する際のトリガー
-
-    void Awake()
-    {
-
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
-        generateNextBlock = true;
+        GenerateNextBlock(); // （開幕処理）最初のブロックを生成
     }
 
-    // Update is called once per frame
-    void Update()
+    public void GenerateNextBlock() // 次のブロックを生成する
     {
-        if(generateNextBlock)
-        {
-            int i = Random.Range(0, blockNum);
-            GameObject nextBlock = Instantiate(blocks[i]) as GameObject;
-
-            generateNextBlock = false;
-        }
-    }
-
-    public bool GenerateNextBlock
-    {
-        set { generateNextBlock = value; }
-        get { return generateNextBlock; }
+        GameObject nextBlock = Instantiate(blocks[Random.Range(0, blockNum)]) as GameObject;// ランダムなテトリミノを生成
     }
 }
