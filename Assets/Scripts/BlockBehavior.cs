@@ -7,7 +7,7 @@ public class BlockBehavior : MonoBehaviour
     BlockList bL;
     BlockGenerator bG;
 
-    GameOverManager gOM;
+    PanelManager pM;
 
     List<GameObject> currentBlockList = new List<GameObject>(); // 現在動かしているテトリミノのブロックのリスト
 
@@ -32,7 +32,7 @@ public class BlockBehavior : MonoBehaviour
         bG = bM.GetComponent<BlockGenerator>();
 
         GameObject uiM = GameObject.FindWithTag("UIManager");
-        gOM = uiM.GetComponent<GameOverManager>();
+        pM = uiM.GetComponent<PanelManager>();
     }
 
     // Start is called before the first frame update
@@ -41,7 +41,7 @@ public class BlockBehavior : MonoBehaviour
         AddCurrentBlockList(); // 現在動かしているテトリミノの各ブロックをリストに追加する
         if(CheckGameOverCondition())
         {
-            gOM.DisplayGameOverUI();
+            pM.DisplayGameOverPanel();
             gameOver = true;
         }
         else StartCoroutine("FallBlockCoroutine"); // ブロックが自動で下に落ちる処理

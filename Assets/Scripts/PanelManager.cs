@@ -4,9 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class GameOverManager : MonoBehaviour
+public class PanelManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameOverPanel; // ゲームオーバー時に表示されるリザルト画面
+    [SerializeField] GameObject gameOverPanel; // リザルト画面
+    [SerializeField] GameObject pausedPanel; // ポーズ画面
 
     [SerializeField] GameObject resultScoreNum; // ゲームオーバー時のスコア点数を表示するテキストオブジェクト
     [SerializeField] GameObject resultLevelNum; // ゲームオーバー時のレベルを表示するテキストオブジェクト
@@ -33,6 +34,7 @@ public class GameOverManager : MonoBehaviour
         resultLineText = resultLineNum.GetComponent<Text>();
 
         gameOverPanel.SetActive(false); // リザルト画面の非表示化
+        pausedPanel.SetActive(false); // リザルト画面の非表示化
     }
 
     // Start is called before the first frame update
@@ -47,7 +49,7 @@ public class GameOverManager : MonoBehaviour
         
     }
 
-    public void DisplayGameOverUI() // ゲームオーバー時に表示するUI
+    public void DisplayGameOverPanel() // ゲームオーバー時に表示するUI
     {
         int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit); // ゲームオーバー時のスコアの更新
         resultScoreText.text = resultScore.ToString();
@@ -60,16 +62,14 @@ public class GameOverManager : MonoBehaviour
 
         gameOverPanel.SetActive(true); // リザルト画面の表示
     }
-
-    ///////////////////////////////////////////////////////////////////////
-    /////////////////////////// シーンチェンジ ////////////////////////////
-    ///////////////////////////////////////////////////////////////////////
-    public void RetryStage() // ゲームのリトライ
+    public void DisplayPausedPanel() // ポーズ画面を開く処理
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Time.timeScale = 0f; // ゲーム内時間を止める
+        pausedPanel.SetActive(true); // ポーズ画面の表示
     }
-    public void ChangeSceneToTitle() // シーンチェンジ（タイトルへ）
+    public void HidePausedPanel() // ポーズ画面を閉じる（ゲームを再開する）
     {
-        SceneManager.LoadScene("Title");
+        Time.timeScale = 1f; // ゲーム内時間を再度動かす
+        pausedPanel.SetActive(false); // ポーズ画面の非表示
     }
 }
