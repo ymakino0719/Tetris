@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameOverManager : MonoBehaviour
 {
@@ -46,17 +47,29 @@ public class GameOverManager : MonoBehaviour
         
     }
 
-    public void DisplayGameOverUI()
+    public void DisplayGameOverUI() // ゲームオーバー時に表示するUI
     {
-        int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit); // リザルトスコアの更新
-        resultScoreText.text = resultScore.ToString("00000000");
+        int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit); // ゲームオーバー時のスコアの更新
+        resultScoreText.text = resultScore.ToString();
 
-        int resultLevel = sM.CheckDisplayLimit(sM.Level, levelLimit); // リザルトスコアの更新
-        resultScoreText.text = resultLevel.ToString("000");
+        int resultLevel = sM.CheckDisplayLimit(sM.Level, levelLimit); // ゲームオーバー時のレベル数の更新
+        resultLevelText.text = resultLevel.ToString();
 
-        int resultLine = sM.CheckDisplayLimit(sM.Line, lineLimit); // リザルトスコアの更新
-        resultScoreText.text = resultLine.ToString("000");
+        int resultLine = sM.CheckDisplayLimit(sM.Line, lineLimit); // ゲームオーバー時のライン数の更新
+        resultLineText.text = resultLine.ToString();
 
         gameOverPanel.SetActive(true); // リザルト画面の表示
+    }
+
+    ///////////////////////////////////////////////////////////////////////
+    /////////////////////////// シーンチェンジ ////////////////////////////
+    ///////////////////////////////////////////////////////////////////////
+    public void RetryStage() // ゲームのリトライ
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+    public void ChangeSceneToTitle() // シーンチェンジ（タイトルへ）
+    {
+        SceneManager.LoadScene("Title");
     }
 }
