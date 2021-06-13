@@ -7,6 +7,8 @@ public class BlockBehavior : MonoBehaviour
     BlockList bL;
     BlockGenerator bG;
 
+    GameOverManager gOM;
+
     List<GameObject> currentBlockList = new List<GameObject>(); // 現在動かしているテトリミノのブロックのリスト
 
     float intervalTime = 1.0f; // ブロック移動のインターバル時間
@@ -21,30 +23,60 @@ public class BlockBehavior : MonoBehaviour
     Vector3 rightDir = new Vector3(1.0f, 0, 0);
     Vector3 leftDir = new Vector3(-1.0f, 0, 0);
     Vector3 downDir = new Vector3(0, -1.0f, 0);
+
+    bool gameOver = false; // ゲームオーバー条件
     void Awake()
     {
         GameObject bM = GameObject.FindWithTag("BlockManager");
         bL = bM.GetComponent<BlockList>();
         bG = bM.GetComponent<BlockGenerator>();
+
+        GameObject uiM = GameObject.FindWithTag("UIManager");
+        gOM = uiM.GetComponent<GameOverManager>();
     }
 
     // Start is called before the first frame update
     void Start()
     {
         AddCurrentBlockList(); // 現在動かしているテトリミノの各ブロックをリストに追加する
-        StartCoroutine("FallBlockCoroutine"); // ブロックが自動で下に落ちる処理
+        if(CheckGameOverCondition())
+        {
+            gOM.DisplayGameOverUI();
+            gameOver = true;
+        }
+        else StartCoroutine("FallBlockCoroutine"); // ブロックが自動で下に落ちる処理
     }
 
     // Update is called once per frame
     void Update()
     {
-        ShortPressProcess(); // 単押し入力移動の処理
-        LongPressProcess(); // 長押し入力移動の処理
+        if(!gameOver)
+        {
+            ShortPressProcess(); // 単押し入力移動の処理
+            LongPressProcess(); // 長押し入力移動の処理
+        }
     }
 
     void AddCurrentBlockList() // 現在動かしているテトリミノの各ブロックをリストに追加する
     {
         foreach (Transform child in this.gameObject.transform) currentBlockList.Add(child.gameObject);
+    }
+
+    bool CheckGameOverCondition()
+    {
+        for (int j = 0; j < currentBlockList.Count; j++)
+        {
+            Vector3 vec = currentBlockList[j].transform.position; // 各ブロックの出現位置Pos
+            int x = Mathf.RoundToInt(vec.x);
+            int y = Mathf.RoundToInt(vec.y);
+
+            if (bL.Blocks[x, y]) // 出現位置にすでにブロックがある場合、ゲームオーバー
+            {
+                gameOver = true;
+                return true; // 各ブロックの移動先Posのブロックの存在をtrueにする
+            } 
+        }
+        return false;
     }
     private IEnumerator FallBlockCoroutine() // ブロックが自動で下に落ちる処理
     {
@@ -85,6 +117,7 @@ public class BlockBehavior : MonoBehaviour
     {
         StackBlocks(); // ブロックのスタック
 
+        bG.GenerateCurrentBlock(); // 今のブロックを生成
         bG.GenerateNextBlock(); // 次のブロックを生成
         bL.DeleteAndDropLineProcess(); // 消去対象となる行を確認し、消去・落下させる処理
 

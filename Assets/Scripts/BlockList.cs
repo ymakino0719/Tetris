@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class BlockList : MonoBehaviour
 {
+    [SerializeField] GameObject UIManager;
+    ScoreManager sM;
+
     static readonly int row = 10; // 列数
     static readonly int column = 25; // 行数
 
@@ -11,6 +14,11 @@ public class BlockList : MonoBehaviour
     bool[] deleteLineBool = new bool[column]; // 指定行の消去をするかどうか
 
     [SerializeField] GameObject[] stackedLineList = new GameObject[column]; // 各行にスタックされるブロック（GameObject）を子に持つオブジェクトのリスト
+
+    void Awake()
+    {
+        sM = UIManager.GetComponent<ScoreManager>();
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +41,12 @@ public class BlockList : MonoBehaviour
     {
         bool deleteLineExist = CheckDeleteLineExists(); // 消去の対象となる行があるか確認する
 
-        if (deleteLineExist) DeleteAndDropLines(); // 行を消し、落下させる処理
+        if (deleteLineExist)
+        {
+            int count = DeleteAndDropLines(); // 行を消し、落下させる処理
+            sM.UpdateScore(count); // スコア（内部値）の更新
+            sM.DisplayScores(); // スコア（表示画面）の更新
+        }
     }
 
     bool CheckDeleteLineExists() // 消去の対象となる行があるか確認する
@@ -59,7 +72,7 @@ public class BlockList : MonoBehaviour
         return exist;
     }
 
-    void DeleteAndDropLines() // 行を消し、落下させる処理
+    int DeleteAndDropLines() // 行を消し、落下させる処理
     {
         int deleteLineCount = 0; // （下から数えて）落下させる行の数を記録
 
@@ -75,6 +88,8 @@ public class BlockList : MonoBehaviour
                 if(deleteLineCount >= 1) DropLine(cNum, deleteLineCount); // 落下させる行の処理
             }
         }
+
+        return deleteLineCount;
     }
 
     void DeleteLine(int cNum) // 消去する行の処理
