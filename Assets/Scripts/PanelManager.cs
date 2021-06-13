@@ -36,19 +36,6 @@ public class PanelManager : MonoBehaviour
         gameOverPanel.SetActive(false); // リザルト画面の非表示化
         pausedPanel.SetActive(false); // リザルト画面の非表示化
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void DisplayGameOverPanel() // ゲームオーバー時に表示するUI
     {
         int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit); // ゲームオーバー時のスコアの更新

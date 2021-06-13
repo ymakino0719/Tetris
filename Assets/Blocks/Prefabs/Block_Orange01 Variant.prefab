@@ -10,13 +10,13 @@ PrefabInstance:
     - target: {fileID: 2902686042800223560, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}
       propertyPath: m_Name
-      value: Block_Orange01
+      value: Block_Orange01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5450265773862900796, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: ee80ca5ce3669d448a7611a0848bf1e6,
+      objectReference: {fileID: 21300000, guid: fdb041cb7f99c9f4fbb352c3ac558ad4,
         type: 3}
     - target: {fileID: 5450265773862900796, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}

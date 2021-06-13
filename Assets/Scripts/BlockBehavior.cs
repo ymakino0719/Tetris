@@ -118,9 +118,15 @@ public class BlockBehavior : MonoBehaviour
         StackBlocks(); // ブロックのスタック
 
         bG.GenerateCurrentBlock(); // 今のブロックを生成
-        bG.GenerateNextBlock(); // 次のブロックを生成
-        bL.DeleteAndDropLineProcess(); // 消去対象となる行を確認し、消去・落下させる処理
 
+        bG.DestroyBlockGameObject(bG.TransparentBlockParent); // 落下地点として表示されていた透明なブロックを、更新のため削除する
+        bG.GenerateTransparentBlock(); // 今の透明ブロックを生成
+
+        bG.DestroyBlockGameObject(bG.NextBlockParent); // 次のブロックとして表示されていた前のブロックを、更新のため削除する
+        bG.GenerateNextBlock(); // 次のブロックを生成
+
+        bL.DeleteAndDropLineProcess(); // 消去対象となる行を確認し、消去・落下させる処理
+        
         Destroy(this.gameObject);
     }
 

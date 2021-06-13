@@ -10,13 +10,13 @@ PrefabInstance:
     - target: {fileID: 2902686042800223560, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}
       propertyPath: m_Name
-      value: Block_Purple01
+      value: Block_Purple01 Variant
       objectReference: {fileID: 0}
     - target: {fileID: 5450265773862900796, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 807eaaad932dd934dae696787bfaf347,
+      objectReference: {fileID: 21300000, guid: 7ecd6a5b76a7ef847a2e6f1fb1b7c5be,
         type: 3}
     - target: {fileID: 5450265773862900796, guid: dbeecf21fdcdea34b93f1e51c7726552,
         type: 3}
