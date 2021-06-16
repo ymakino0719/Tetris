@@ -5,37 +5,28 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-    int score = 0; // スコア
-    int level = 1; // レベル
-    int line = 0; // 消したラインの総数
+    // スコア
+    int score = 0;
+    // レベル
+    int level = 1;
+    // 消したラインの総数
+    int line = 0;
 
     // 各表示上限値
     int scoreLimit = 99999999;
     int levelLimit = 999;
     int lineLimit = 999;
 
-    // 各UIのゲームオブジェクト
-    [SerializeField] GameObject text_Score;
-    [SerializeField] GameObject text_Level;
-    [SerializeField] GameObject text_Line;
-
     // 各UIのTextコンポーネント
-    Text scoreText;
-    Text levelText;
-    Text lineText;
-
-    void Awake()
-    {
-        // 各UIのTextコンポーネントの取得
-        scoreText = text_Score.GetComponent<Text>();
-        levelText = text_Level.GetComponent<Text>();
-        lineText = text_Line.GetComponent<Text>();
-    }
+    [SerializeField] Text scoreText;
+    [SerializeField] Text levelText;
+    [SerializeField] Text lineText;
 
     // Start is called before the first frame update
     void Start()
     {
-        DisplayScores(); // スコアの初期化
+        // スコアの初期化
+        DisplayScores();
     }
 
     public void DisplayScores()
@@ -50,13 +41,16 @@ public class ScoreManager : MonoBehaviour
         lineText.text = dLine.ToString("000");
     }
 
-    public void UpdateScore(int count) // スコアの更新
+    // スコアの更新
+    public void UpdateScore(int count)
     {
         score += count * 100;
         line += count;
         level = line / 10 + 1;
     }
-    public int CheckDisplayLimit(int num, int limit) // 各スコアの表示上限の確認
+
+    // 各スコアの表示上限の確認
+    public int CheckDisplayLimit(int num, int limit)
     {
         if (num <= limit) return num;
         else return limit;

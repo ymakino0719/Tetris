@@ -6,57 +6,64 @@ using UnityEngine.SceneManagement;
 
 public class PanelManager : MonoBehaviour
 {
-    [SerializeField] GameObject gameOverPanel; // リザルト画面
-    [SerializeField] GameObject pausedPanel; // ポーズ画面
+    // リザルト画面
+    [SerializeField] GameObject gameOverPanel;
+    // ポーズ画面
+    [SerializeField] GameObject pausedPanel;
 
-    [SerializeField] GameObject resultScoreNum; // ゲームオーバー時のスコア点数を表示するテキストオブジェクト
-    [SerializeField] GameObject resultLevelNum; // ゲームオーバー時のレベルを表示するテキストオブジェクト
-    [SerializeField] GameObject resultLineNum; // ゲームオーバー時の消去ライン数を表示するテキストオブジェクト
-
-    // 各UIのTextコンポーネント
-    Text resultScoreText;
-    Text resultLevelText;
-    Text resultLineText;
+    // リザルト時の各スコアを表示する各Textコンポーネント
+    [SerializeField] Text resultScoreNum;
+    [SerializeField] Text resultLevelNum;
+    [SerializeField] Text resultLineNum;
 
     // 各表示上限値
     int scoreLimit = 99999999;
     int levelLimit = 999;
     int lineLimit = 999;
 
-    ScoreManager sM;
+    // スコアマネージャー
+    [SerializeField] ScoreManager sM;
     void Awake()
     {
-        sM = GetComponent<ScoreManager>();
-
-        // 各UIのTextコンポーネントの取得
-        resultScoreText = resultScoreNum.GetComponent<Text>();
-        resultLevelText = resultLevelNum.GetComponent<Text>();
-        resultLineText = resultLineNum.GetComponent<Text>();
-
-        gameOverPanel.SetActive(false); // リザルト画面の非表示化
-        pausedPanel.SetActive(false); // リザルト画面の非表示化
+        // リザルト・ポーズ画面の非表示化
+        gameOverPanel.SetActive(false);
+        pausedPanel.SetActive(false);
     }
-    public void DisplayGameOverPanel() // ゲームオーバー時に表示するUI
+
+    // ゲームオーバー時に表示するUI
+    public void DisplayGameOverPanel()
     {
-        int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit); // ゲームオーバー時のスコアの更新
-        resultScoreText.text = resultScore.ToString();
+        // ゲームオーバー時のスコアの更新
+        int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit);
+        resultScoreNum.text = resultScore.ToString();
 
-        int resultLevel = sM.CheckDisplayLimit(sM.Level, levelLimit); // ゲームオーバー時のレベル数の更新
-        resultLevelText.text = resultLevel.ToString();
+        // ゲームオーバー時のレベル数の更新
+        int resultLevel = sM.CheckDisplayLimit(sM.Level, levelLimit);
+        resultLevelNum.text = resultLevel.ToString();
 
-        int resultLine = sM.CheckDisplayLimit(sM.Line, lineLimit); // ゲームオーバー時のライン数の更新
-        resultLineText.text = resultLine.ToString();
+        // ゲームオーバー時のライン数の更新
+        int resultLine = sM.CheckDisplayLimit(sM.Line, lineLimit);
+        resultLineNum.text = resultLine.ToString();
 
-        gameOverPanel.SetActive(true); // リザルト画面の表示
+        // リザルト画面の表示
+        gameOverPanel.SetActive(true);
     }
-    public void DisplayPausedPanel() // ポーズ画面を開く処理
+
+    // ポーズ画面を開く処理
+    public void DisplayPausedPanel()
     {
-        Time.timeScale = 0f; // ゲーム内時間を止める
-        pausedPanel.SetActive(true); // ポーズ画面の表示
+        // ゲーム内時間を止める
+        Time.timeScale = 0f;
+        // ポーズ画面の表示
+        pausedPanel.SetActive(true);
     }
-    public void HidePausedPanel() // ポーズ画面を閉じる（ゲームを再開する）
+
+    // ポーズ画面を閉じる（ゲームを再開する）
+    public void HidePausedPanel()
     {
-        Time.timeScale = 1f; // ゲーム内時間を再度動かす
-        pausedPanel.SetActive(false); // ポーズ画面の非表示
+        // ゲーム内時間を再度動かす
+        Time.timeScale = 1f;
+        // ポーズ画面の非表示
+        pausedPanel.SetActive(false);
     }
 }

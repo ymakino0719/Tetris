@@ -5,16 +5,22 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeManager : MonoBehaviour
 {
-    public void ChangeSceneToStage() // シーンチェンジ（ステージへ）
+    // シーンチェンジ（ステージへ）
+    public void ChangeSceneToStage()
     {
         SceneManager.LoadScene("Stage");
     }
-    public void RetryStage() // ゲームのリトライ
+
+    // ゲームのリトライ
+    public void RetryStage()
     {
-        Time.timeScale = 1f; // ゲーム内時間を再度動かす
+        // ゲーム内時間を再度動かす
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-    public void ChangeSceneToTitle() // シーンチェンジ（タイトルへ）
+
+    // シーンチェンジ（タイトルへ）
+    public void ChangeSceneToTitle()
     {
         SceneManager.LoadScene("Title");
     }

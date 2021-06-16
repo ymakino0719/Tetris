@@ -4,52 +4,60 @@ using UnityEngine;
 
 public class BlockList : MonoBehaviour
 {
-    [SerializeField] GameObject UIManager;
-    ScoreManager sM;
+    [SerializeField] ScoreManager sM;
 
-    static readonly int row = 10; // 列数
-    static readonly int column = 25; // 行数
+    // 列数
+    static readonly int row = 10;
+    // 行数
+    static readonly int column = 25;
 
-    bool[,] blocks = new bool[row, column]; // 指定の行数・列数にブロックが存在するか（存在する場合true）
-    bool[] deleteLineBool = new bool[column]; // 指定行の消去をするかどうか
+    // 指定の行数・列数にブロックが存在するか（存在する場合true）
+    bool[,] blocks = new bool[row, column];
+    // 指定行の消去をするかどうか
+    bool[] deleteLineBool = new bool[column];
 
-    [SerializeField] GameObject[] stackedLineList = new GameObject[column]; // 各行にスタックされるブロック（GameObject）を子に持つオブジェクトのリスト
-
-    void Awake()
-    {
-        sM = UIManager.GetComponent<ScoreManager>();
-    }
+    // 各行にスタックされるブロック（GameObject）を子に持つオブジェクトのリスト
+    [SerializeField] GameObject[] stackedLineList = new GameObject[column];
 
     // Start is called before the first frame update
     void Start()
     {
-        ResetAllBlocks(); // （初期化処理）全てのブロックを空にする
+        // （初期化処理）全てのブロックを空にする
+        ResetAllBlocks();
     }
 
-    void ResetAllBlocks() // （初期化処理）全てのブロックを空にする
+    // （初期化処理）全てのブロックを空にする
+    void ResetAllBlocks()
     {
+        // 全てのブロックが存在していない状態（false）にする
         for (int j = 0; j < column; j++)
         {
             for (int k = 0; k < row; k++)
             {
-                blocks[k, j] = false; // 全てのブロックが存在していない状態にする
+                blocks[k, j] = false;
             }
         }
     }
 
-    public void DeleteAndDropLineProcess() // 消去対象となる行を確認し、消去・落下させる処理
+    // 消去対象となる行を確認し、消去・落下させる処理
+    public void DeleteAndDropLineProcess()
     {
-        bool deleteLineExist = CheckDeleteLineExists(); // 消去の対象となる行があるか確認する
+        // 消去の対象となる行があるか確認する
+        bool deleteLineExist = CheckDeleteLineExists();
 
         if (deleteLineExist)
         {
-            int count = DeleteAndDropLines(); // 行を消し、落下させる処理
-            sM.UpdateScore(count); // スコア（内部値）の更新
-            sM.DisplayScores(); // スコア（表示画面）の更新
+            // 行を消し、落下させる処理
+            int count = DeleteAndDropLines();
+            // スコア（内部値）の更新
+            sM.UpdateScore(count);
+            // スコア（表示画面）の更新
+            sM.DisplayScores();
         }
     }
 
-    bool CheckDeleteLineExists() // 消去の対象となる行があるか確認する
+    // 消去の対象となる行があるか確認する
+    bool CheckDeleteLineExists()
     {
         bool exist = false;
 
@@ -59,72 +67,95 @@ public class BlockList : MonoBehaviour
 
             for (int k = 0; k < row; k++)
             {
-                if (!blocks[k, j]) fullLine = false; // 指定行の１列でもブロックが存在しない場合、Falseを代入
+                // 指定行の１列でもブロックが存在しない場合、Falseを代入
+                if (!blocks[k, j]) fullLine = false;
             }
 
-            if (fullLine) // 指定行の全てにブロックが存在する場合の処理
+            // 指定行の全てにブロックが存在する場合の処理
+            if (fullLine)
             {
-                deleteLineBool[j] = true; // 消去対象行を記録
-                exist = true; // 消去処理を実行させるためのbool
+                // 消去対象行を記録
+                deleteLineBool[j] = true;
+                // 消去処理を実行させるためのbool
+                exist = true;
             } 
         }
 
         return exist;
     }
 
-    int DeleteAndDropLines() // 行を消し、落下させる処理
+    // 行を消し、落下させる処理
+    int DeleteAndDropLines()
     {
-        int deleteLineCount = 0; // （下から数えて）落下させる行の数を記録
+        // （下から数えて）落下させる行の数を記録
+        int deleteLineCount = 0;
 
         for (int cNum = 0; cNum < column; cNum++)
         {
             if (deleteLineBool[cNum]) 
             {
-                DeleteLine(cNum); // 消去する行の処理
-                deleteLineCount++; // 落下させる行の数を追加
+                // 消去する行の処理
+                DeleteLine(cNum);
+                // 落下させる行の数を追加
+                deleteLineCount++;
             }
             else 
             {
-                if(deleteLineCount >= 1) DropLine(cNum, deleteLineCount); // 落下させる行の処理
+                // 落下させる行の処理
+                if (deleteLineCount >= 1) DropLine(cNum, deleteLineCount);
             }
         }
 
         return deleteLineCount;
     }
 
-    void DeleteLine(int cNum) // 消去する行の処理
+    // 消去する行の処理
+    void DeleteLine(int cNum)
     {
-        foreach (Transform n in stackedLineList[cNum].transform) Destroy(n.gameObject); // 消去する行のブロックをすべて消去する
+        // 消去する行のブロックをすべて消去する
+        foreach (Transform n in stackedLineList[cNum].transform) Destroy(n.gameObject);
 
-        deleteLineBool[cNum] = false; // 消去判定行のboolの初期化
+        // 消去判定行のboolの初期化
+        deleteLineBool[cNum] = false;
     }
 
-    void DropLine(int cNum, int dLC) // 落下させる行の処理
+    // 落下させる行の処理
+    void DropLine(int cNum, int dLC)
     {
-        for (int rNum = 0; rNum < row; rNum++) // 配列情報（blocks[, ]）の更新
+        // 配列情報（blocks[, ]）の更新
+        for (int rNum = 0; rNum < row; rNum++)
         {
-            if (cNum + dLC < column) // 現在の行数と落下させる行の数の合計が行の総数を越えない場合
+            // 現在の行数と落下させる行の数の合計が行の総数を越えるかどうか
+            if (cNum + dLC < column)
             {
-                blocks[rNum, cNum - dLC] = blocks[rNum, cNum]; // 現在の行にあるブロックの有無情報を、落下させる行数分下のブロック情報に上書きする
+                // 越えない場合
+                // 現在の行にあるブロックの有無情報を、落下させる行数分下のブロック情報に上書きする
+                blocks[rNum, cNum - dLC] = blocks[rNum, cNum];
             }
-            else // 行の総数を越える場合
+            else
             {
-                blocks[rNum, cNum] = false; // 現在の行の全てのブロック情報をfalseにする
+                // 越える場合
+                // 現在の行の全てのブロック情報をfalseにする
+                blocks[rNum, cNum] = false;
             }
         }
 
-        if (cNum + dLC < column) // オブジェクト情報（stackedLineList[]）の更新
+        // オブジェクト情報（stackedLineList[]）の更新
+        if (cNum + dLC < column)
         {
             List<GameObject> bList = new List<GameObject>();
             foreach (Transform n in stackedLineList[cNum].transform)
             {
-                bList.Add(n.gameObject); // 移動元の全てのブロックを一度リスト化する
+                // 移動元の全てのブロックを一度リスト化する
+                bList.Add(n.gameObject);
             }
 
             foreach (GameObject gao in bList)
             {
-                gao.transform.position += new Vector3(0, -dLC, 0); // 全てのブロックのY座標を落下させる行数分落とす
-                gao.transform.parent = stackedLineList[cNum - dLC].transform; // 全てのブロックを移動先となる行オブジェクトの子オブジェクトとして再配置
+                // 全てのブロックのY座標を落下させる行数分落とす
+                gao.transform.position += new Vector3(0, -dLC, 0);
+                // 全てのブロックを移動先となる行オブジェクトの子オブジェクトとして再配置
+                gao.transform.parent = stackedLineList[cNum - dLC].transform;
             }
         }
     }
