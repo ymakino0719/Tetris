@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class FadeInAndOut : MonoBehaviour
 {
     // フェードの早さ
-    public float fadeSpeed = 0.002f;
+    float fadeSpeed = 0.02f;
     // 透明度
     float alpha;
     // 色
@@ -71,7 +71,7 @@ public class FadeInAndOut : MonoBehaviour
         }
     }
 
-    public void FadeProcess()
+    void FadeProcess()
     {
         // FadeInの処理の場合、alpha に fadeSpeed を加算していき、1を越えたら1を代入
         // FadeOutの処理の場合は fadeOut を減算していき、0を下回ったら0を代入
