@@ -12,6 +12,8 @@ public class BlockBehavior : MonoBehaviour
     ScoreManager sM;
     PerformanceManager perM;
 
+    SoundManager soundM;
+
     // 現在動かしているテトリミノのブロックのリスト
     List<GameObject> currentBlockList = new List<GameObject>();
 
@@ -52,6 +54,8 @@ public class BlockBehavior : MonoBehaviour
         sCM = uiM.GetComponent<SceneChangeManager>();
         sM = uiM.GetComponent<ScoreManager>();
         perM = uiM.GetComponent<PerformanceManager>();
+
+        soundM = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
 
         // インターバル時間の更新
         intervalTime = sM.IntervalTime;
@@ -139,8 +143,8 @@ public class BlockBehavior : MonoBehaviour
     {
         yield return new WaitForSeconds(intervalTime);
 
-        // 下入力中は自動で下に落下しない
-        while (Input.GetButton("DownKey")) yield return null;
+        // 下入力中、またはポーズ中は自動で下に落下しない
+        while (Input.GetButton("DownKey") || pM.Paused) yield return null;
 
         // ブロックの移動
         SlideBlock(downDir);
@@ -241,6 +245,9 @@ public class BlockBehavior : MonoBehaviour
         {
             // 回転
             RotateBlock();
+
+            // 回転時の効果音を流す
+            soundM.PlaySFX(3);
         }
     }
 

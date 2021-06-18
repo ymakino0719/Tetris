@@ -10,6 +10,8 @@ public class PanelManager : MonoBehaviour
     [SerializeField] GameObject gameOverPanel;
     // ポーズ画面
     [SerializeField] GameObject pausedPanel;
+    // 操作不能パネル
+    [SerializeField] GameObject inoperablePanel;
 
     // リザルト時の各スコアを表示する各Textコンポーネント
     [SerializeField] Text resultScoreNum;
@@ -24,6 +26,9 @@ public class PanelManager : MonoBehaviour
     // スコアマネージャー
     [SerializeField] ScoreManager sM;
 
+    // サウンドマネージャー
+    [SerializeField] SoundManager soundM;
+
     // ポーズ画面中かどうか
     bool paused = false;
     void Awake()
@@ -31,6 +36,9 @@ public class PanelManager : MonoBehaviour
         // ゲームオーバーパネルとポーズ画面の非表示化
         gameOverPanel.SetActive(false);
         pausedPanel.SetActive(false);
+
+        // 操作不能パネルの表示（開幕のボタンによる操作を不可にする）
+        inoperablePanel.SetActive(true);
     }
 
     // ポーズ画面を開く処理
@@ -40,6 +48,8 @@ public class PanelManager : MonoBehaviour
         paused = true;
         // ゲーム内時間を止める
         Time.timeScale = 0f;
+        // BGMの音量を小さくする
+        soundM.ChangeBGMVolume(0.3f);
         // ポーズ画面の表示
         pausedPanel.SetActive(true);
     }
@@ -51,6 +61,8 @@ public class PanelManager : MonoBehaviour
         paused = false;
         // ゲーム内時間を再度動かす
         Time.timeScale = 1f;
+        // BGMの音量を初期値に戻す
+        soundM.TurnBackBGMVolumeToInitial();
         // ポーズ画面の非表示
         pausedPanel.SetActive(false);
     }
@@ -61,6 +73,11 @@ public class PanelManager : MonoBehaviour
         gameOverPanel.SetActive(true);
     }
 
+    // 操作不能パネルを非表示にする
+    public void HideInoperablePanel()
+    {
+        inoperablePanel.SetActive(false);
+    }
     public bool Paused
     {
         set { paused = value; }

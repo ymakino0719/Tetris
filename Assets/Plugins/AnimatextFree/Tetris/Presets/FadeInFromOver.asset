@@ -18,8 +18,8 @@ MonoBehaviour:
   pingpongLoop: 0
   continuousLoop: 0
   sortType: 0
-  interval: 0.1
-  singleTime: 0.3
+  interval: 0.5
+  singleTime: 1.5
   position: {x: 0, y: 100}
   easingType: 7
   fadeRange:

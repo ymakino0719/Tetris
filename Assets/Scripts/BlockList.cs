@@ -5,6 +5,7 @@ using UnityEngine;
 public class BlockList : MonoBehaviour
 {
     [SerializeField] ScoreManager sM;
+    [SerializeField] SoundManager soundM;
 
     // 列数
     static readonly int row = 10;
@@ -47,6 +48,9 @@ public class BlockList : MonoBehaviour
 
         if (deleteLineExist)
         {
+            // ブロックを消した時の効果音を流す
+            soundM.PlaySFX(5);
+
             // 行を消し、落下させる処理
             int count = DeleteAndDropLines();
             // スコア（内部値）の更新
@@ -55,6 +59,11 @@ public class BlockList : MonoBehaviour
             sM.DisplayScores();
             // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
             sM.ChangeBackground_WhenLineOrLevelIncreased(count);
+        }
+        else
+        {
+            // ブロックが落下した時の効果音を流す
+            soundM.PlaySFX(4);
         }
     }
 

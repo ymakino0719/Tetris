@@ -8,6 +8,8 @@ public class PerformanceManager : MonoBehaviour
 {
     [SerializeField] FadeInAndOut fIAO;
     [SerializeField] SceneChangeManager sCM;
+    [SerializeField] SoundManager soundM;
+    [SerializeField] PanelManager pM;
 
     // カットイン
     [SerializeField] GameObject ready;
@@ -61,6 +63,12 @@ public class PerformanceManager : MonoBehaviour
         StartCoroutine(Coroutine_SceneChangeToStageAfterFadeIn(result));
     }
 
+    // ステージを再度読み込む
+    public void RetryStageAfterFadeIn()
+    {
+        StartCoroutine("Coroutine_RetryStageAfterFadeIn");
+    }
+
     IEnumerator Coroutine_SceneChangeToStageAfterFadeIn(string sceneName)
     {
         // フェードインの開始
@@ -70,6 +78,20 @@ public class PerformanceManager : MonoBehaviour
 
         // シーンチェンジ
         sCM.ChangeSceneToStage(sceneName);
+    }
+
+    IEnumerator Coroutine_RetryStageAfterFadeIn()
+    {
+        // 時間を戻す
+        Time.timeScale = 1f;
+
+        // フェードインの開始
+        fIAO.StartFadeIn();
+
+        yield return new WaitForSeconds(1.0f);
+
+        // Stageシーンの再読み込み
+        sCM.RetryStage();
     }
 
     // カットイン処理；Readyの文字の後にGoを出す。Goが出たらブロックが操作できるように
@@ -84,9 +106,18 @@ public class PerformanceManager : MonoBehaviour
         ready.SetActive(false);
         go.SetActive(true);
 
+        // Goの効果音を流す
+        soundM.PlaySFX(0);
+
         yield return new WaitForSeconds(0.9f);
 
         go.SetActive(false);
+
+        // 開幕の操作不能パネルを非表示にする
+        pM.HideInoperablePanel();
+
+        // BGMを流す
+        soundM.PlayBGM();
 
         // ブロック操作を可能にする
         playingCutIn = false;
@@ -96,6 +127,9 @@ public class PerformanceManager : MonoBehaviour
     public IEnumerator StartLevelUpCutIn()
     {
         levelUp.SetActive(true);
+
+        // LevelUpの効果音を流す
+        soundM.PlaySFX(1);
 
         yield return new WaitForSeconds(1.4f);
 
@@ -109,6 +143,12 @@ public class PerformanceManager : MonoBehaviour
 
         gameOver01.SetActive(true);
 
+        // GameOverの効果音を流す
+        soundM.PlaySFX(2);
+
+        // BGMを徐々に小さくする処理を開始する
+        soundM.DecreaseBGMVolume = true;
+
         yield return new WaitForSeconds(1.0f);
 
         gameOver01.SetActive(false);
@@ -118,8 +158,6 @@ public class PerformanceManager : MonoBehaviour
 
         // 何らかのキーが押されたらリザルト画面へ移動する
         while (!Input.anyKeyDown) yield return null;
-
-        Debug.Log("end");
 
         // リザルト画面へシーンチェンジする
         SceneChangeToResultAfterFadeIn();

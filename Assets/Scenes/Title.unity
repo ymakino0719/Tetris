@@ -910,6 +910,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fIAO: {fileID: 1590860354}
   sCM: {fileID: 1590860352}
+  ready: {fileID: 0}
+  go: {fileID: 0}
+  levelUp: {fileID: 0}
+  gameOver01: {fileID: 0}
+  gameOver02: {fileID: 0}
   initialFadeOut: 1
 --- !u!1 &1961838899
 GameObject:
@@ -1009,7 +1014,7 @@ MonoBehaviour:
         m_MethodName: PlayOneShot
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 4a97cb1a6e3d4154587f32f0da3bce60,
+          m_ObjectArgument: {fileID: 8300000, guid: be9c6eef484eadc42a55a067d9ce6910,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
