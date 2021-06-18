@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class PanelManager : MonoBehaviour
 {
     // リザルト画面
-    [SerializeField] GameObject gameOverPanel;
+    //[SerializeField] GameObject gameOverPanel;
     // ポーズ画面
     [SerializeField] GameObject pausedPanel;
 
@@ -23,13 +23,17 @@ public class PanelManager : MonoBehaviour
 
     // スコアマネージャー
     [SerializeField] ScoreManager sM;
+
+    // ポーズ画面中かどうか
+    bool paused = false;
     void Awake()
     {
         // リザルト・ポーズ画面の非表示化
-        gameOverPanel.SetActive(false);
+        //gameOverPanel.SetActive(false);
         pausedPanel.SetActive(false);
     }
 
+    /*
     // ゲームオーバー時に表示するUI
     public void DisplayGameOverPanel()
     {
@@ -48,10 +52,13 @@ public class PanelManager : MonoBehaviour
         // リザルト画面の表示
         gameOverPanel.SetActive(true);
     }
+    */
 
     // ポーズ画面を開く処理
     public void DisplayPausedPanel()
     {
+        // ポーズ中にする
+        paused = true;
         // ゲーム内時間を止める
         Time.timeScale = 0f;
         // ポーズ画面の表示
@@ -61,9 +68,16 @@ public class PanelManager : MonoBehaviour
     // ポーズ画面を閉じる（ゲームを再開する）
     public void HidePausedPanel()
     {
+        // ポーズを終了する
+        paused = false;
         // ゲーム内時間を再度動かす
         Time.timeScale = 1f;
         // ポーズ画面の非表示
         pausedPanel.SetActive(false);
+    }
+    public bool Paused
+    {
+        set { paused = value; }
+        get { return paused; }
     }
 }

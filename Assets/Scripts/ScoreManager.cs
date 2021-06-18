@@ -26,7 +26,17 @@ public class ScoreManager : MonoBehaviour
     void Start()
     {
         // スコアの初期化
+        InitializeScores();
+        // スコアの表示
         DisplayScores();
+    }
+
+    void InitializeScores()
+    {
+        // スコアの初期化
+        score = 0;
+        level = 1;
+        line = 0;
     }
 
     public void DisplayScores()

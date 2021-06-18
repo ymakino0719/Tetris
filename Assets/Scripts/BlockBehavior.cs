@@ -8,6 +8,7 @@ public class BlockBehavior : MonoBehaviour
     BlockGenerator bG;
 
     PanelManager pM;
+    SceneChangeManager sCM;
 
     // 現在動かしているテトリミノのブロックのリスト
     List<GameObject> currentBlockList = new List<GameObject>();
@@ -42,6 +43,7 @@ public class BlockBehavior : MonoBehaviour
 
         GameObject uiM = GameObject.FindWithTag("UIManager");
         pM = uiM.GetComponent<PanelManager>();
+        sCM = uiM.GetComponent<SceneChangeManager>();
     }
 
     // Start is called before the first frame update
@@ -52,8 +54,8 @@ public class BlockBehavior : MonoBehaviour
 
         if (CheckGameOverCondition())
         {
-            pM.DisplayGameOverPanel();
-            gameOver = true;
+            // リザルト画面へシーンチェンジする
+            sCM.ChangeSceneToResult();
         }
         else
         {
@@ -65,7 +67,7 @@ public class BlockBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameOver)
+        if(!gameOver && !pM.Paused)
         {
             // 単押し入力移動の処理
             ShortPressProcess();
