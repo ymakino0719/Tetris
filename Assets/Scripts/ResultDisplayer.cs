@@ -24,9 +24,9 @@ public class ResultDisplayer : MonoBehaviour
 
     void DisplayResultScores()
     {
-        resultScoreNum.text = resultScore.ToString("00000000");
-        resultLevelNum.text = resultLevel.ToString("000");
-        resultLineNum.text = resultLine.ToString("000");
+        resultScoreNum.text = resultScore.ToString();
+        resultLevelNum.text = resultLevel.ToString();
+        resultLineNum.text = resultLine.ToString();
     }
 
     public int ResultScore

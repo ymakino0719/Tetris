@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class PanelManager : MonoBehaviour
 {
-    // リザルト画面
-    //[SerializeField] GameObject gameOverPanel;
+    // ゲームオーバー時に全域に表示する完全に透明なパネル
+    [SerializeField] GameObject gameOverPanel;
     // ポーズ画面
     [SerializeField] GameObject pausedPanel;
 
@@ -28,31 +28,10 @@ public class PanelManager : MonoBehaviour
     bool paused = false;
     void Awake()
     {
-        // リザルト・ポーズ画面の非表示化
-        //gameOverPanel.SetActive(false);
+        // ゲームオーバーパネルとポーズ画面の非表示化
+        gameOverPanel.SetActive(false);
         pausedPanel.SetActive(false);
     }
-
-    /*
-    // ゲームオーバー時に表示するUI
-    public void DisplayGameOverPanel()
-    {
-        // ゲームオーバー時のスコアの更新
-        int resultScore = sM.CheckDisplayLimit(sM.Score, scoreLimit);
-        resultScoreNum.text = resultScore.ToString();
-
-        // ゲームオーバー時のレベル数の更新
-        int resultLevel = sM.CheckDisplayLimit(sM.Level, levelLimit);
-        resultLevelNum.text = resultLevel.ToString();
-
-        // ゲームオーバー時のライン数の更新
-        int resultLine = sM.CheckDisplayLimit(sM.Line, lineLimit);
-        resultLineNum.text = resultLine.ToString();
-
-        // リザルト画面の表示
-        gameOverPanel.SetActive(true);
-    }
-    */
 
     // ポーズ画面を開く処理
     public void DisplayPausedPanel()
@@ -75,6 +54,13 @@ public class PanelManager : MonoBehaviour
         // ポーズ画面の非表示
         pausedPanel.SetActive(false);
     }
+
+    // ゲームオーバーパネルを開く処理
+    public void DisplayGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+    }
+
     public bool Paused
     {
         set { paused = value; }

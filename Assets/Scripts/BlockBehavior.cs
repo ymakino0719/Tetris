@@ -10,6 +10,7 @@ public class BlockBehavior : MonoBehaviour
     PanelManager pM;
     SceneChangeManager sCM;
     ScoreManager sM;
+    PerformanceManager perM;
 
     // 現在動かしているテトリミノのブロックのリスト
     List<GameObject> currentBlockList = new List<GameObject>();
@@ -50,6 +51,7 @@ public class BlockBehavior : MonoBehaviour
         pM = uiM.GetComponent<PanelManager>();
         sCM = uiM.GetComponent<SceneChangeManager>();
         sM = uiM.GetComponent<ScoreManager>();
+        perM = uiM.GetComponent<PerformanceManager>();
 
         // インターバル時間の更新
         intervalTime = sM.IntervalTime;
@@ -65,26 +67,44 @@ public class BlockBehavior : MonoBehaviour
 
         if (CheckGameOverCondition())
         {
-            // リザルト画面へシーンチェンジする
-            sCM.ChangeSceneToResult();
+            // ゲームオーバーパネルを表示
+            pM.DisplayGameOverPanel();
+
+            // ゲームオーバーのカットインを出す
+            perM.StartCoroutine("StartGameOverCutIn");
+        }
+        else if(!perM.PlayingCutIn)
+        {
+            // ブロックが自動で下に落ちる処理を実行
+            StartCoroutine("FallBlockCoroutine");
         }
         else
         {
-            // ブロックが自動で下に落ちる処理
-            StartCoroutine("FallBlockCoroutine");
+            // 開幕のカットイン演出が終わるまで、ブロックを降下させない
+            StartCoroutine("WaitForCutInToEndCoroutine");
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(!gameOver && !pM.Paused)
+        if(!gameOver && !pM.Paused && !perM.PlayingCutIn)
         {
             // 単押し入力移動の処理
             ShortPressProcess();
             // 長押し入力移動の処理
             LongPressProcess();
         }
+    }
+
+    // 開幕のカットイン演出が終わるまで、ブロックを降下させない
+    public IEnumerator WaitForCutInToEndCoroutine()
+    {
+        // カットイン演出が終わるまで待つ
+        while (perM.PlayingCutIn) yield return null;
+
+        // ブロックが自動で下に落ちる処理を実行
+        StartCoroutine("FallBlockCoroutine");
     }
 
     void AddCurrentBlockList()
@@ -115,7 +135,7 @@ public class BlockBehavior : MonoBehaviour
     }
 
     // ブロックが自動で下に落ちる処理
-    private IEnumerator FallBlockCoroutine()
+    public IEnumerator FallBlockCoroutine()
     {
         yield return new WaitForSeconds(intervalTime);
 

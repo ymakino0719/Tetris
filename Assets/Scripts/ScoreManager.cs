@@ -25,6 +25,9 @@ public class ScoreManager : MonoBehaviour
     // 背景のコンポーネント
     [SerializeField] BackgroundBehavior bB;
 
+    // カットイン演出のあるコンポーネント
+    [SerializeField] PerformanceManager perM;
+
     // レベルアップ
     bool levelUp = false;
 
@@ -94,6 +97,9 @@ public class ScoreManager : MonoBehaviour
         if (levelUp)
         {
             // レベルアップ時
+            // レベルアップのカットインを出す
+            perM.StartCoroutine("StartLevelUpCutIn");
+
             // スクロール速度を初期化
             bB.ResetScrollSpeed();
 
