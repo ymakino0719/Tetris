@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 79105335}
   - component: {fileID: 79105337}
   - component: {fileID: 79105336}
+  - component: {fileID: 79105338}
   m_Layer: 5
   m_Name: ResultText
   m_TagString: Untagged
@@ -190,7 +191,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Result
+  m_Text: <FadeInFromOver>Result
 --- !u!222 &79105337
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -199,6 +200,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 79105334}
   m_CullTransparentMesh: 0
+--- !u!114 &79105338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 79105334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>Result
+  _parsedText: Result
+  _outputText: Result
+  _effectText: Result
+  _retainedText: <FadeInFromOver>Result
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &144596577
 GameObject:
   m_ObjectHideFlags: 0
@@ -258,10 +290,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.23529412}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -311,7 +343,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3c6eef88ff67043a3ab37af593f8620a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -387,7 +419,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
-    m_FontSize: 64
+    m_FontSize: 48
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -466,10 +498,10 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 0.23529412}
-    m_PressedColor: {r: 1, g: 1, b: 1, a: 0}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -519,7 +551,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 3c6eef88ff67043a3ab37af593f8620a, type: 3}
   m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -548,6 +580,7 @@ GameObject:
   - component: {fileID: 436025931}
   - component: {fileID: 436025933}
   - component: {fileID: 436025932}
+  - component: {fileID: 436025934}
   m_Layer: 5
   m_Name: LineNum
   m_TagString: Untagged
@@ -606,7 +639,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000
+  m_Text: <FadeInFromOver>000
 --- !u!222 &436025933
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -615,6 +648,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 436025930}
   m_CullTransparentMesh: 0
+--- !u!114 &436025934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 436025930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>000
+  _parsedText: 000
+  _outputText: 000
+  _effectText: 000
+  _retainedText: <FadeInFromOver>000
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &576008947
 GameObject:
   m_ObjectHideFlags: 0
@@ -626,6 +690,7 @@ GameObject:
   - component: {fileID: 576008948}
   - component: {fileID: 576008950}
   - component: {fileID: 576008949}
+  - component: {fileID: 576008951}
   m_Layer: 5
   m_Name: ScoreNum
   m_TagString: Untagged
@@ -684,7 +749,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 00000000
+  m_Text: <FadeInFromOver>00000000
 --- !u!222 &576008950
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -693,6 +758,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 576008947}
   m_CullTransparentMesh: 0
+--- !u!114 &576008951
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576008947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>00000000
+  _parsedText: 00000000
+  _outputText: 00000000
+  _effectText: 00000000
+  _retainedText: <FadeInFromOver>00000000
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &1127279718
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,7 +847,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
-    m_FontSize: 64
+    m_FontSize: 48
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 3
@@ -782,6 +878,7 @@ GameObject:
   - component: {fileID: 1151440930}
   - component: {fileID: 1151440932}
   - component: {fileID: 1151440931}
+  - component: {fileID: 1151440933}
   m_Layer: 5
   m_Name: ScoreText
   m_TagString: Untagged
@@ -840,7 +937,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score:'
+  m_Text: '<FadeInFromOver>Score:'
 --- !u!222 &1151440932
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -849,6 +946,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151440929}
   m_CullTransparentMesh: 0
+--- !u!114 &1151440933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151440929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: '<FadeInFromOver>Score:'
+  _parsedText: 'Score:'
+  _outputText: 'Score:'
+  _effectText: 'Score:'
+  _retainedText: '<FadeInFromOver>Score:'
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &1168742253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1133,10 +1261,10 @@ RectTransform:
   m_Father: {fileID: 1843663195}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 720, y: 1280}
+  m_SizeDelta: {x: -120, y: -480}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1240736700
 MonoBehaviour:
@@ -1157,8 +1285,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: c4ce27367278c4380a08bedcd3137ff1, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1186,6 +1314,7 @@ GameObject:
   - component: {fileID: 1454538436}
   - component: {fileID: 1454538438}
   - component: {fileID: 1454538437}
+  - component: {fileID: 1454538439}
   m_Layer: 5
   m_Name: LevelText
   m_TagString: Untagged
@@ -1244,7 +1373,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Level:'
+  m_Text: '<FadeInFromOver>Level:'
 --- !u!222 &1454538438
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1253,6 +1382,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1454538435}
   m_CullTransparentMesh: 0
+--- !u!114 &1454538439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1454538435}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: '<FadeInFromOver>Level:'
+  _parsedText: 'Level:'
+  _outputText: 'Level:'
+  _effectText: 'Level:'
+  _retainedText: '<FadeInFromOver>Level:'
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &1511667802
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1424,7 @@ GameObject:
   - component: {fileID: 1511667803}
   - component: {fileID: 1511667805}
   - component: {fileID: 1511667804}
+  - component: {fileID: 1511667806}
   m_Layer: 5
   m_Name: LevelNum
   m_TagString: Untagged
@@ -1322,7 +1483,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 000
+  m_Text: <FadeInFromOver>000
 --- !u!222 &1511667805
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1331,6 +1492,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1511667802}
   m_CullTransparentMesh: 0
+--- !u!114 &1511667806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511667802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>000
+  _parsedText: 000
+  _outputText: 000
+  _effectText: 000
+  _retainedText: <FadeInFromOver>000
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &1545346521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1342,6 +1534,7 @@ GameObject:
   - component: {fileID: 1545346522}
   - component: {fileID: 1545346524}
   - component: {fileID: 1545346523}
+  - component: {fileID: 1545346525}
   m_Layer: 5
   m_Name: LineText
   m_TagString: Untagged
@@ -1400,7 +1593,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Score:'
+  m_Text: '<FadeInFromOver>Score:'
 --- !u!222 &1545346524
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1409,6 +1602,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545346521}
   m_CullTransparentMesh: 0
+--- !u!114 &1545346525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1545346521}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: '<FadeInFromOver>Score:'
+  _parsedText: 'Score:'
+  _outputText: 'Score:'
+  _effectText: 'Score:'
+  _retainedText: '<FadeInFromOver>Score:'
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
 --- !u!1 &1841247642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1446,10 +1670,10 @@ RectTransform:
   m_Father: {fileID: 1240736699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -400}
+  m_SizeDelta: {x: 600, y: 800}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1843663191
 GameObject:

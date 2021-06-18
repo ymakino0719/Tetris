@@ -22,6 +22,19 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] Text levelText;
     [SerializeField] Text lineText;
 
+    // 背景のコンポーネント
+    [SerializeField] BackgroundBehavior bB;
+
+    // レベルアップ
+    bool levelUp = false;
+
+    // ブロック移動のインターバル時間
+    float intervalTime = 1.0f;
+    // ブロック移動のインターバル時間の最小値
+    float intervalTime_Min = 0.1f;
+    // ブロック移動のインターバル時間の減少係数
+    float decreaseCoef = 0.9f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +69,13 @@ public class ScoreManager : MonoBehaviour
     {
         score += count * 100;
         line += count;
+
+        // レベルが上がったらtrueを代入
+        int beforeL = level;
         level = line / 10 + 1;
+
+        // 1レベル上がったとき
+        if (beforeL < level) levelUp = true;
     }
 
     // 各スコアの表示上限の確認
@@ -64,6 +83,43 @@ public class ScoreManager : MonoBehaviour
     {
         if (num <= limit) return num;
         else return limit;
+    }
+
+    // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
+    public void ChangeBackground_WhenLineOrLevelIncreased(int count)
+    {
+        // ブロック落下のインターバル時間を減少させる
+        DecreaseIntervalTimeOfBlockMovement();
+
+        if (levelUp)
+        {
+            // レベルアップ時
+            // スクロール速度を初期化
+            bB.ResetScrollSpeed();
+
+            // 背景画像番号の更新
+            bB.UpdateCurrentBackgroundNum();
+            // 背景画像の変更
+            bB.ChangeBackgroundImages();
+
+            // countの更新（消去ライン数を、レベルアップ時の余剰分のライン数に変更）
+            count = line % 10;
+
+            levelUp = false;
+        }
+
+        // 消去したラインの数だけスクロール速度を上昇
+        bB.AddScrollSpeed(count);
+    }
+
+    // ブロック落下のインターバル時間を減少させる
+    // ※この関数及び変数をどこに置くか迷ったが、暫定的にScoreManagerに置くことにした
+    void DecreaseIntervalTimeOfBlockMovement()
+    {
+        float a = intervalTime * decreaseCoef;
+
+        // 最小値よりは小さくならないようにする
+        intervalTime = (a > intervalTime_Min) ? a : intervalTime_Min;
     }
 
     public int Score
@@ -80,5 +136,10 @@ public class ScoreManager : MonoBehaviour
     {
         set { line = value; }
         get { return line; }
+    }
+    public float IntervalTime
+    {
+        set { intervalTime = value; }
+        get { return intervalTime; }
     }
 }

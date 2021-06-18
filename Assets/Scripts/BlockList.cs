@@ -53,6 +53,8 @@ public class BlockList : MonoBehaviour
             sM.UpdateScore(count);
             // スコア（表示画面）の更新
             sM.DisplayScores();
+            // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
+            sM.ChangeBackground_WhenLineOrLevelIncreased(count);
         }
     }
 

@@ -9,23 +9,28 @@ public class BlockBehavior : MonoBehaviour
 
     PanelManager pM;
     SceneChangeManager sCM;
+    ScoreManager sM;
 
     // 現在動かしているテトリミノのブロックのリスト
     List<GameObject> currentBlockList = new List<GameObject>();
 
     // ブロック移動のインターバル時間
-    float intervalTime = 1.0f;
+    float intervalTime;
+    // ブロック移動のインターバル時間（初期値）
+    float intervalTime_Initial = 1.0f;
 
     // 横方向キーの累積長押し時間
     float longPressTime_Hor = 0.0f;
     // 縦方向キーの累積長押し時間
     float longPressTime_Ver = 0.0f;
     // 横方向の長押し中の時間係数（加速前）
-    float timeCoef_Hor = 1.0f;
+    float timeCoef_Hor = 0.75f;
     // 縦方向の長押し中の時間係数（加速前）
-    float timeCoef_Ver = 1.0f;
+    float timeCoef_Ver;
+    // 縦方向の長押し中の時間係数（加速前）の初期値
+    float timeCoef_Ver_Initial = 1.25f;
     // 長押し中の加速係数（加速後）
-    float fastMoveCoef = 15.0f;
+    float fastMoveCoef = 60.0f;
     // 加速時間閾値
     float maxPressTime = 0.8f;
 
@@ -44,6 +49,12 @@ public class BlockBehavior : MonoBehaviour
         GameObject uiM = GameObject.FindWithTag("UIManager");
         pM = uiM.GetComponent<PanelManager>();
         sCM = uiM.GetComponent<SceneChangeManager>();
+        sM = uiM.GetComponent<ScoreManager>();
+
+        // インターバル時間の更新
+        intervalTime = sM.IntervalTime;
+        // 初期値の代入（ブロック移動のインターバル時間が短くなればなるほど、下入力時に一瞬発生するブロック停止時間が短くなる）
+        timeCoef_Ver = timeCoef_Ver_Initial * (intervalTime_Initial / intervalTime);
     }
 
     // Start is called before the first frame update
@@ -242,7 +253,8 @@ public class BlockBehavior : MonoBehaviour
         {
             // 押されていないときの初期化処理
             longPressTime_Ver = 0.0f;
-            timeCoef_Ver = 1.0f;
+            // ブロック移動のインターバル時間が短くなるにつれ、下入力時に一瞬発生するブロック停止時間を短くする
+            timeCoef_Ver = timeCoef_Ver_Initial * (intervalTime_Initial / intervalTime);
         }
     }
 
