@@ -8,8 +8,10 @@ public class SceneChangeManager : MonoBehaviour
     [SerializeField] ScoreManager sM;
 
     // シーンチェンジ（指定されたシーンへ）
-    public void ChangeSceneToStage(string sceneName)
+    public void ChangeSceneToSceneName(string sceneName)
     {
+        if(sceneName == "Result") SceneManager.sceneLoaded += ResultSceneLoaded;
+
         SceneManager.LoadScene(sceneName);
     }
 

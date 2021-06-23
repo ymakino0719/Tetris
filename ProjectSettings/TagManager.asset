@@ -7,6 +7,9 @@ TagManager:
   - BlockManager
   - UIManager
   - SoundManager
+  - Tetrimino_I
+  - Tetrimino_O
+  - Tetrimino_Others
   layers:
   - Default
   - TransparentFX

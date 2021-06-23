@@ -39,6 +39,7 @@ public class BlockGenerator : MonoBehaviour
     public void GenerateCurrentBlock()
     {
         // 生成するブロックのタイプを指定
+        // blockType 0: 今落下させるブロック
         int blockType = 0;
 
         // 生成するブロックの位置を指定
@@ -57,12 +58,13 @@ public class BlockGenerator : MonoBehaviour
         nextNum = Random.Range(0, blockNum);
 
         // 生成するブロックのタイプを指定
+        // blockType 1: 次に落下させるブロック（Nextに表示する）
         int blockType = 1;
 
         // 生成するブロックの位置を指定
         Vector3 blockPos = new Vector3(2f, 20.75f, 0);
         // ※テトリミノの内、IとOは座標を少しずらす
-        if (nextNum == 0) { blockPos += new Vector3(-0.4f, 0.5f, 0); }
+        if (nextNum == 0) { blockPos += new Vector3(0.4f, 0.5f, 0); }
         else if (nextNum == 3) { blockPos += new Vector3(-0.4f, 0, 0); }
 
         // 生成するブロックの大きさを指定
@@ -75,6 +77,7 @@ public class BlockGenerator : MonoBehaviour
     public void GenerateTransparentBlock()
     {
         // 生成するブロックのタイプを指定
+        // blockType 2: 今落下させるブロックの落下地点表示となる透明なブロック
         int blockType = 2;
 
         // 生成するブロックの位置を指定
@@ -123,6 +126,23 @@ public class BlockGenerator : MonoBehaviour
         // 次のブロックとして表示されていたブロックを削除する
         foreach (Transform n in gao.transform) GameObject.Destroy(n.gameObject);
     }
+
+    // 終了処理（BlockBehavior:EndProcess01 の続き）
+    public void EndProcess02()
+    {
+        // 今のブロックを生成
+        GenerateCurrentBlock();
+
+        // 今の透明ブロックを生成
+        GenerateTransparentBlock();
+
+        // 次のブロックとして表示されていた前のブロックを、更新のため削除する
+        DestroyBlockGameObject(nextBlockParent);
+
+        // 次のブロックを生成
+        GenerateNextBlock();
+    }
+
     public GameObject NextBlockParent
     {
         get { return nextBlockParent; }

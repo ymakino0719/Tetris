@@ -106,7 +106,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 408922717}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0, z: 0}
+  m_LocalPosition: {x: -1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6953343897065270394}
@@ -187,7 +187,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1709145458}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6953343897065270394}
@@ -268,7 +268,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1756853111}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 0, z: 0}
+  m_LocalPosition: {x: -2, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6953343897065270394}
@@ -334,12 +334,17 @@ PrefabInstance:
     - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}
       propertyPath: m_Name
-      value: Tetrimino_I
+      value: Tetrimino_I Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Tetrimino_I
       objectReference: {fileID: 0}
     - target: {fileID: 2584059021467127206, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}

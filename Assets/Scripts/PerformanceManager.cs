@@ -10,6 +10,7 @@ public class PerformanceManager : MonoBehaviour
     [SerializeField] SceneChangeManager sCM;
     [SerializeField] SoundManager soundM;
     [SerializeField] PanelManager pM;
+    [SerializeField] BlockList bL;
 
     // カットイン
     [SerializeField] GameObject ready;
@@ -28,6 +29,13 @@ public class PerformanceManager : MonoBehaviour
 
     // カットインの最中かどうか（開幕はカットインがあるためtrue）
     bool playingCutIn = true;
+
+    // 消去する行の全てのブロックを縮める
+    bool shrinkBlocks = false;
+    // 縮小係数
+    float shrinkCoef = 0.95f;
+    // 縮小最小サイズ（Y軸）
+    float minSizeY = 0.05f;
 
     void Start()
     {
@@ -48,6 +56,12 @@ public class PerformanceManager : MonoBehaviour
             StartCoroutine("StartReadyAndGoCutIn");
         }
     }
+    void Update()
+    {
+        // 消去する行が持つ全ての子オブジェクトの縦幅を縮める
+        if(shrinkBlocks) ShrinkDeleteLineBlocks();
+    }
+
     public void SceneChangeToTitleAfterFadeIn()
     {
         StartCoroutine(Coroutine_SceneChangeToStageAfterFadeIn(title));
@@ -77,7 +91,7 @@ public class PerformanceManager : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
 
         // シーンチェンジ
-        sCM.ChangeSceneToStage(sceneName);
+        sCM.ChangeSceneToSceneName(sceneName);
     }
 
     IEnumerator Coroutine_RetryStageAfterFadeIn()
@@ -163,6 +177,33 @@ public class PerformanceManager : MonoBehaviour
         SceneChangeToResultAfterFadeIn();
     }
 
+    public IEnumerator Coroutine_DeleteLinePerformance()
+    {
+        bL.CreateDeleteLineList();
+        shrinkBlocks = true;
+
+        while(shrinkBlocks) yield return null;
+
+        bL.DeleteLineProcess();
+    }
+
+    // 消去する行が持つ全ての子オブジェクトの縦幅を縮める
+    void ShrinkDeleteLineBlocks()
+    {
+        foreach(GameObject gao in bL.DeleteLineList)
+        {
+            foreach (Transform child in gao.transform)
+            {
+                Vector3 scale = child.transform.localScale;
+
+                scale.y *= shrinkCoef;
+
+                // 最小サイズを下回っている場合、縮小ループ処理を終了
+                if (scale.y >= minSizeY) child.transform.localScale = scale;
+                else shrinkBlocks = false;
+            }
+        }
+    }
     public bool PlayingCutIn
     {
         set { playingCutIn = value; }

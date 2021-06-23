@@ -334,12 +334,17 @@ PrefabInstance:
     - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}
       propertyPath: m_Name
-      value: Tetrimino_L
+      value: Tetrimino_L Variant
       objectReference: {fileID: 0}
     - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1765491031526613412, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
+        type: 3}
+      propertyPath: m_TagString
+      value: Tetrimino_Others
       objectReference: {fileID: 0}
     - target: {fileID: 2584059021467127206, guid: 6706fa37d8aa88148be1d61e4de2d2a7,
         type: 3}

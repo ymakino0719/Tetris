@@ -6,6 +6,8 @@ public class BlockList : MonoBehaviour
 {
     [SerializeField] ScoreManager sM;
     [SerializeField] SoundManager soundM;
+    [SerializeField] PerformanceManager perM;
+    [SerializeField] BlockGenerator bG;
 
     // 列数
     static readonly int row = 10;
@@ -19,6 +21,9 @@ public class BlockList : MonoBehaviour
 
     // 各行にスタックされるブロック（GameObject）を子に持つオブジェクトのリスト
     [SerializeField] GameObject[] stackedLineList = new GameObject[column];
+
+    // 消去する行のリスト
+    List<GameObject> deleteLineList = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -51,20 +56,47 @@ public class BlockList : MonoBehaviour
             // ブロックを消した時の効果音を流す
             soundM.PlaySFX(5);
 
-            // 行を消し、落下させる処理
-            int count = DeleteAndDropLines();
-            // スコア（内部値）の更新
-            sM.UpdateScore(count);
-            // スコア（表示画面）の更新
-            sM.DisplayScores();
-            // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
-            sM.ChangeBackground_WhenLineOrLevelIncreased(count);
+            perM.StartCoroutine("Coroutine_DeleteLinePerformance");
         }
         else
         {
             // ブロックが落下した時の効果音を流す
             soundM.PlaySFX(4);
+
+            // 終了処理02へ移行
+            bG.EndProcess02();
         }
+    }
+
+    // 消去する行のリストを作成
+    public void CreateDeleteLineList()
+    {
+        for (int cNum = 0; cNum < column; cNum++)
+        {
+            // 消去対象の行であった場合、リストに追加
+            if (deleteLineBool[cNum])
+            {
+                deleteLineList.Add(stackedLineList[cNum]);
+            }
+        }
+    }
+
+    public void DeleteLineProcess()
+    {
+        // 行を消し、落下させる処理
+        int count = DeleteAndDropLines();
+        // 消去する行のリストを全削除
+        deleteLineList.Clear();
+
+        // スコア（内部値）の更新
+        sM.UpdateScore(count);
+        // スコア（表示画面）の更新
+        sM.DisplayScores();
+        // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
+        sM.ChangeBackground_WhenLineOrLevelIncreased(count);
+
+        // 終了処理02へ移行
+        bG.EndProcess02();
     }
 
     // 消去の対象となる行があるか確認する
@@ -180,5 +212,10 @@ public class BlockList : MonoBehaviour
     {
         set { stackedLineList = value; }
         get { return stackedLineList; }
+    }
+
+    public List<GameObject> DeleteLineList
+    {
+        get { return deleteLineList; }
     }
 }

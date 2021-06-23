@@ -43,6 +43,16 @@ public class BlockBehavior : MonoBehaviour
 
     // ゲームオーバー条件
     bool gameOver = false;
+
+    // このブロックがテトリミノ「I」のとき
+    bool tetrimino_I = false;
+    // このブロックがテトリミノ「O」のとき
+    bool tetrimino_O = false;
+
+    // ブロックが移動したかどうか（移動先のエリアの確認が必要なため）
+    bool checkDestinationArea = false;
+    // 範囲外のブロックが存在し、非表示にしているかどうか
+    bool outOfRangeAreaBlocksExist = false;
     void Awake()
     {
         GameObject bM = GameObject.FindWithTag("BlockManager");
@@ -57,6 +67,10 @@ public class BlockBehavior : MonoBehaviour
 
         soundM = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
 
+        // このブロックがテトリミノの「I」あるいは「O」に該当するか確認
+        if (this.transform.tag == "Tetrimino_I") tetrimino_I = true;
+        if (this.transform.tag == "Tetrimino_O") tetrimino_O = true;
+
         // インターバル時間の更新
         intervalTime = sM.IntervalTime;
         // 初期値の代入（ブロック移動のインターバル時間が短くなればなるほど、下入力時に一瞬発生するブロック停止時間が短くなる）
@@ -68,6 +82,9 @@ public class BlockBehavior : MonoBehaviour
     {
         // 現在動かしているテトリミノの各ブロックをリストに追加する
         AddCurrentBlockList();
+
+        // ブロックの場所が（上方向の）範囲外エリアかどうか確認
+        CheckAreasBlocksExist();
 
         if (CheckGameOverCondition())
         {
@@ -98,6 +115,10 @@ public class BlockBehavior : MonoBehaviour
             ShortPressProcess();
             // 長押し入力移動の処理
             LongPressProcess();
+
+            // ブロックが動いたときの処理;
+            // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+            if (checkDestinationArea) CheckAreasBlocksExist();
         }
     }
 
@@ -147,61 +168,59 @@ public class BlockBehavior : MonoBehaviour
         while (Input.GetButton("DownKey") || pM.Paused) yield return null;
 
         // ブロックの移動
-        SlideBlock(downDir);
+        SlideBlock(downDir, true);
+
+        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+        CheckAreasBlocksExist();
 
         // 繰り返し
         StartCoroutine("FallBlockCoroutine");
     }
 
-    // ブロックの移動
-    void SlideBlock(Vector3 dir)
+    // ブロックの移動（下移動中の時のみ bool down は true を受ける）
+    void SlideBlock(Vector3 dir, bool down)
     {
         foreach (GameObject gao in currentBlockList)
         {
-            // vec:ブロックの移動先のPos
             Vector3 vec = gao.transform.position;
+            // vec + dir : ブロックの移動先のPos
             vec += dir;
 
-            // 左右にはみ出した場合、移動を行わず、処理を終了
-            if (vec.x <= -1.0f || vec.x >= 10.0f) return;
+            // 下記のいずれかを満たす場合、移動を行わず、処理を終了する
+            // ①左右のフィールド外にはみ出した場合
+            // ②左右移動時に限り、移動先にブロックが存在する場合
+            if (vec.x <= -1.0f || vec.x >= 10.0f || (!down && bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)])) return;
 
             // 下記のいずれかを満たす場合、移動を行わず、終了処理を実行する
             // ①最下層に到達した場合
-            // ②移動先にブロックが存在する場合
-            if (vec.y <= -1.0f || bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)])
+            // ②下方向移動時に限り、移動先にブロックが存在する場合
+            if (vec.y <= -1.0f || (down && bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)]))
             {
                 // 終了処理
-                EndProcess();
+                EndProcess01();
                 return;
             }
         }
 
         // 全てのブロックの移動先が画面外でなくブロックもない場合、移動を実行する
         this.gameObject.transform.Translate(dir, Space.World);
+
+        checkDestinationArea = true;
     }
 
-    // 終了処理
-    void EndProcess()
+    // 終了処理 ; 操作中のブロックを落下させ、現在のブロックを削除し次のブロックを生成する処理
+    // EndProcess01_消去する行がある場合は、ライン消去演出を挟んでからEndProcess02に移行する（ない場合はノータイムで02に移行）
+    void EndProcess01()
     {
         // ブロックのスタック
         StackBlocks();
 
-        // 今のブロックを生成
-        bG.GenerateCurrentBlock();
-
         // 落下地点として表示されていた透明なブロックを、更新のため削除する
         bG.DestroyBlockGameObject(bG.TransparentBlockParent);
-        // 今の透明ブロックを生成
-        bG.GenerateTransparentBlock();
-
-        // 次のブロックとして表示されていた前のブロックを、更新のため削除する
-        bG.DestroyBlockGameObject(bG.NextBlockParent);
-        // 次のブロックを生成
-        bG.GenerateNextBlock();
 
         // 消去対象となる行を確認し、消去・落下させる処理
         bL.DeleteAndDropLineProcess();
-        
+
         Destroy(this.gameObject);
     }
 
@@ -220,7 +239,50 @@ public class BlockBehavior : MonoBehaviour
 
             // 各ブロックを、対応する行のリストの子オブジェクトとして再配置
             currentBlockList[j].transform.parent = bL.StackedLineList[y].transform;
+
+            // 各ブロックの回転方向を修正しておく
+            currentBlockList[j].transform.eulerAngles = Vector3.up;
         }
+    }
+
+    // ブロックが表示されていい場所かを確認する
+    void CheckAreasBlocksExist()
+    {
+        // ①範囲外ブロックがあるかどうか確認
+        foreach (GameObject gao in currentBlockList)
+        {
+            // ブロックの場所が上方向の範囲外エリアだった場合、SpriteRenderer を非表示にする
+            if (gao.transform.position.y >= 19.5f)
+            {
+                gao.GetComponent<SpriteRenderer>().enabled = false;
+                outOfRangeAreaBlocksExist = true;
+            }
+        }
+
+        // ②範囲外ブロックが範囲内に戻ったかどうか確認
+        if (outOfRangeAreaBlocksExist)
+        {
+            bool exist = false;
+
+            foreach (GameObject gao in currentBlockList)
+            {
+                // ブロックの場所が範囲内に戻った場合、SpriteRenderer を非表示にする
+                if (gao.transform.position.y < 19.5f)
+                {
+                    gao.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else
+                {
+                    // 範囲外ブロックが1つでもあった場合、trueを返す
+                    exist = true;
+                }
+            }
+
+            // 範囲外ブロックが1つもなかった場合、次から②の処理は（一旦）終了となる
+            if (!exist) outOfRangeAreaBlocksExist = false;
+        }
+
+        checkDestinationArea = false;
     }
 
     // 単押し入力移動の処理
@@ -228,17 +290,17 @@ public class BlockBehavior : MonoBehaviour
     {
         if (Input.GetButtonDown("RightKey"))
         {
-            SlideBlock(rightDir);
+            SlideBlock(rightDir, false);
         }
 
         if (Input.GetButtonDown("LeftKey"))
         {
-            SlideBlock(leftDir);
+            SlideBlock(leftDir, false);
         }
 
         if (Input.GetButtonDown("DownKey"))
         {
-            SlideBlock(downDir);
+            SlideBlock(downDir, true);
         }
 
         if (Input.GetButtonDown("UpKey"))
@@ -257,12 +319,12 @@ public class BlockBehavior : MonoBehaviour
         if (Input.GetButton("RightKey") && !Input.GetButton("LeftKey"))
         {
             // 右矢印だけ押されているときの処理
-            LongPressMovement(rightDir, ref longPressTime_Hor, ref timeCoef_Hor);
+            LongPressMovement(rightDir, ref longPressTime_Hor, ref timeCoef_Hor, false);
         }
         else if (!Input.GetButton("RightKey") && Input.GetButton("LeftKey"))
         {
             // 左矢印だけ押されているときの処理
-            LongPressMovement(leftDir, ref longPressTime_Hor, ref timeCoef_Hor);
+            LongPressMovement(leftDir, ref longPressTime_Hor, ref timeCoef_Hor, false);
         }
         else
         {
@@ -274,7 +336,7 @@ public class BlockBehavior : MonoBehaviour
         if (Input.GetButton("DownKey"))
         {
             // 下矢印が押されているときの処理
-            LongPressMovement(downDir, ref longPressTime_Ver, ref timeCoef_Ver);
+            LongPressMovement(downDir, ref longPressTime_Ver, ref timeCoef_Ver, true);
         }
         else
         {
@@ -286,14 +348,14 @@ public class BlockBehavior : MonoBehaviour
     }
 
     // 長押し入力移動の動作
-    void LongPressMovement(Vector3 dir, ref float longPressTime, ref float timeCoef)
+    void LongPressMovement(Vector3 dir, ref float longPressTime, ref float timeCoef, bool down)
     {
         longPressTime += timeCoef * Time.deltaTime;
 
         if (longPressTime >= maxPressTime)
         {
             // ブロックの移動
-            SlideBlock(dir);
+            SlideBlock(dir, down);
 
             // 初期化
             longPressTime = 0.0f;
@@ -306,6 +368,9 @@ public class BlockBehavior : MonoBehaviour
     void RotateBlock()
     {
         bool normalRotate = false, rightRotate = false, leftRotate = false;
+
+        // テトリミノの「O」の場合回転させないため、終了
+        if (tetrimino_O) return;
 
         // ずらさないで回転を試す
         normalRotate = RotatePossibility(Vector3.zero);
@@ -322,7 +387,21 @@ public class BlockBehavior : MonoBehaviour
         else if (leftRotate) transform.position += leftDir;
 
         // 回転
-        transform.Rotate(0, 0, 90.0f);
+        // テトリミノの「I」は回転を制限
+        if(tetrimino_I)
+        {
+            // テトリミノの「I」は1パターンの回転しかしないようにする
+            // 既に回転していたら元に戻す（-90度）
+            if (Vector3.Angle(Vector3.up, transform.up) >= 45) transform.Rotate(0, 0, -90.0f);
+            else transform.Rotate(0, 0, 90.0f);
+        }
+        else
+        {
+            // その他の場合は普通に90度ずつ、計4パターンの回転を実施
+            transform.Rotate(0, 0, 90.0f);
+        }
+
+        checkDestinationArea = true;
     }
 
     // 回転できるかどうか
@@ -331,7 +410,9 @@ public class BlockBehavior : MonoBehaviour
         foreach (GameObject gao in currentBlockList)
         {
             // 回転情報
+            // ※テトリミノの「I」に限り、回転を制限（もう回転していたら反対方向に回転）
             Quaternion rot = Quaternion.Euler(0, 0, 90.0f);
+            if (tetrimino_I && Vector3.Angle(Vector3.up, transform.up) >= 45) rot = Quaternion.Euler(0, 0, -90.0f);
             // 回転させるブロック（dir分だけずらす）
             Vector3 point = gao.transform.position + dir;
             // 回転の中心となる位置（dir分だけずらす）

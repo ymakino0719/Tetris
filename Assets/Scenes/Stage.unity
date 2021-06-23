@@ -3473,7 +3473,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6a0a930828de542887645bfb8306d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.003
   fadePanel: {fileID: 1125959992}
   image: {fileID: 1125959994}
 --- !u!114 &1186994236
@@ -3492,6 +3491,7 @@ MonoBehaviour:
   sCM: {fileID: 1186994234}
   soundM: {fileID: 1129225554}
   pM: {fileID: 1186994233}
+  bL: {fileID: 1974990995}
   ready: {fileID: 1515409496}
   go: {fileID: 661813445}
   levelUp: {fileID: 838952697}
@@ -5207,6 +5207,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sM: {fileID: 1186994231}
   soundM: {fileID: 1129225554}
+  perM: {fileID: 1186994236}
+  bG: {fileID: 1974990993}
   stackedLineList:
   - {fileID: 1987453426}
   - {fileID: 714523789}
