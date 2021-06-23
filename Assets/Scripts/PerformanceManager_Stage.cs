@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class PerformanceManager : MonoBehaviour
+public class PerformanceManager_Stage : MonoBehaviour
 {
     [SerializeField] FadeInAndOut fIAO;
     [SerializeField] SceneChangeManager sCM;
@@ -41,20 +41,16 @@ public class PerformanceManager : MonoBehaviour
     {
         // 開幕のフェードアウトの開始
         if (initialFadeOut) fIAO.StartFadeOut();
-        
-        // 現在のシーンが"Stage"のとき
-        if (SceneManager.GetActiveScene().name == stage)
-        {
-            // （開幕処理）全カットインを非表示にしておく
-            ready.SetActive(false);
-            go.SetActive(false);
-            levelUp.SetActive(false);
-            gameOver01.SetActive(false);
-            gameOver02.SetActive(false);
 
-            // ReadyとGoのカットインを出す
-            StartCoroutine("StartReadyAndGoCutIn");
-        }
+        // （開幕処理）全カットインを非表示にしておく
+        ready.SetActive(false);
+        go.SetActive(false);
+        levelUp.SetActive(false);
+        gameOver01.SetActive(false);
+        gameOver02.SetActive(false);
+
+        // ReadyとGoのカットインを出す
+        StartCoroutine("StartReadyAndGoCutIn");
     }
     void Update()
     {

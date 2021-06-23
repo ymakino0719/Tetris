@@ -13,11 +13,6 @@ public class PanelManager : MonoBehaviour
     // 操作不能パネル
     [SerializeField] GameObject inoperablePanel;
 
-    // リザルト時の各スコアを表示する各Textコンポーネント
-    [SerializeField] Text resultScoreNum;
-    [SerializeField] Text resultLevelNum;
-    [SerializeField] Text resultLineNum;
-
     // 各表示上限値
     int scoreLimit = 99999999;
     int levelLimit = 999;

@@ -90,7 +90,6 @@ public class BackgroundBehavior : MonoBehaviour
     {
         scrollSpeed = scrollSpeed_Initial;
     }
-
     public bool Scrolling
     {
         set { scrolling = value; }

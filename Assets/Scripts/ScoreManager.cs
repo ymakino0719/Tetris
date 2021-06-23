@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour
     [SerializeField] BackgroundBehavior bB;
 
     // カットイン演出のあるコンポーネント
-    [SerializeField] PerformanceManager perM;
+    [SerializeField] PerformanceManager_Stage perM;
 
     // レベルアップ
     bool levelUp = false;

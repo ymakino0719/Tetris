@@ -5,22 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class SceneChangeManager : MonoBehaviour
 {
-    [SerializeField] ScoreManager sM;
+    ScoreManager sM;
 
     // シーンチェンジ（指定されたシーンへ）
     public void ChangeSceneToSceneName(string sceneName)
     {
-        if(sceneName == "Result") SceneManager.sceneLoaded += ResultSceneLoaded;
+        if (sceneName == "Result")
+        {
+            sM = GetComponent<ScoreManager>();
+            SceneManager.sceneLoaded += ResultSceneLoaded;
+        }
 
         SceneManager.LoadScene(sceneName);
     }
-
-    // シーンチェンジ（ステージへ）
-    public void ChangeSceneToStage()
-    {
-        SceneManager.LoadScene("Stage");
-    }
-
     // ゲームのリトライ
     public void RetryStage()
     {
@@ -28,16 +25,6 @@ public class SceneChangeManager : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
-
-    // シーンチェンジ（リザルト画面へ）
-    public void ChangeSceneToResult()
-    {
-        // イベントに登録
-        SceneManager.sceneLoaded += ResultSceneLoaded;
-
-        SceneManager.LoadScene("Result");
-    }
-
     void ResultSceneLoaded(Scene next, LoadSceneMode mode)
     {
         // シーン切り替え後にスコアを表示させるスクリプトを取得
@@ -50,11 +37,5 @@ public class SceneChangeManager : MonoBehaviour
 
         // イベントから削除
         SceneManager.sceneLoaded -= ResultSceneLoaded;
-    }
-
-    // シーンチェンジ（タイトルへ）
-    public void ChangeSceneToTitle()
-    {
-        SceneManager.LoadScene("Title");
     }
 }

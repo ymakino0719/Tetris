@@ -7,10 +7,12 @@ public class BlockBehavior : MonoBehaviour
     BlockList bL;
     BlockGenerator bG;
 
+    DetectCurrentBlockMovement dCBM;
+
     PanelManager pM;
     SceneChangeManager sCM;
     ScoreManager sM;
-    PerformanceManager perM;
+    PerformanceManager_Stage perM;
 
     SoundManager soundM;
 
@@ -50,20 +52,24 @@ public class BlockBehavior : MonoBehaviour
     bool tetrimino_O = false;
 
     // ブロックが移動したかどうか（移動先のエリアの確認が必要なため）
-    bool checkDestinationArea = false;
+    bool moveCurrentBlock = false;
+
     // 範囲外のブロックが存在し、非表示にしているかどうか
     bool outOfRangeAreaBlocksExist = false;
+
     void Awake()
     {
         GameObject bM = GameObject.FindWithTag("BlockManager");
         bL = bM.GetComponent<BlockList>();
         bG = bM.GetComponent<BlockGenerator>();
 
+        dCBM = GameObject.FindWithTag("CurrentBlock").GetComponent<DetectCurrentBlockMovement>();
+
         GameObject uiM = GameObject.FindWithTag("UIManager");
         pM = uiM.GetComponent<PanelManager>();
         sCM = uiM.GetComponent<SceneChangeManager>();
         sM = uiM.GetComponent<ScoreManager>();
-        perM = uiM.GetComponent<PerformanceManager>();
+        perM = uiM.GetComponent<PerformanceManager_Stage>();
 
         soundM = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
 
@@ -80,6 +86,9 @@ public class BlockBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // ブロック生成時は「移動した」判定として扱う
+        dCBM.MoveCurrentBlock = true;
+
         // 現在動かしているテトリミノの各ブロックをリストに追加する
         AddCurrentBlockList();
 
@@ -115,10 +124,14 @@ public class BlockBehavior : MonoBehaviour
             ShortPressProcess();
             // 長押し入力移動の処理
             LongPressProcess();
+        }
 
-            // ブロックが動いたときの処理;
-            // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
-            if (checkDestinationArea) CheckAreasBlocksExist();
+        // ブロックが動いたときの処理;
+        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+        if (moveCurrentBlock)
+        {
+            CheckAreasBlocksExist();
+            moveCurrentBlock = false;
         }
     }
 
@@ -170,8 +183,14 @@ public class BlockBehavior : MonoBehaviour
         // ブロックの移動
         SlideBlock(downDir, true);
 
+        /*
         // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
-        CheckAreasBlocksExist();
+        if (moveCurrentBlock)
+        {
+            CheckAreasBlocksExist();
+            moveCurrentBlock = false;
+        }
+        */
 
         // 繰り返し
         StartCoroutine("FallBlockCoroutine");
@@ -205,7 +224,8 @@ public class BlockBehavior : MonoBehaviour
         // 全てのブロックの移動先が画面外でなくブロックもない場合、移動を実行する
         this.gameObject.transform.Translate(dir, Space.World);
 
-        checkDestinationArea = true;
+        moveCurrentBlock = true;
+        dCBM.MoveCurrentBlock = true;
     }
 
     // 終了処理 ; 操作中のブロックを落下させ、現在のブロックを削除し次のブロックを生成する処理
@@ -281,8 +301,6 @@ public class BlockBehavior : MonoBehaviour
             // 範囲外ブロックが1つもなかった場合、次から②の処理は（一旦）終了となる
             if (!exist) outOfRangeAreaBlocksExist = false;
         }
-
-        checkDestinationArea = false;
     }
 
     // 単押し入力移動の処理
@@ -401,7 +419,8 @@ public class BlockBehavior : MonoBehaviour
             transform.Rotate(0, 0, 90.0f);
         }
 
-        checkDestinationArea = true;
+        moveCurrentBlock = true;
+        dCBM.MoveCurrentBlock = true;
     }
 
     // 回転できるかどうか

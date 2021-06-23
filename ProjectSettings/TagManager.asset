@@ -10,6 +10,8 @@ TagManager:
   - Tetrimino_I
   - Tetrimino_O
   - Tetrimino_Others
+  - CurrentBlock
+  - TransparentBlock
   layers:
   - Default
   - TransparentFX

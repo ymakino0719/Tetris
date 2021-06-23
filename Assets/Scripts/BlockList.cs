@@ -6,7 +6,7 @@ public class BlockList : MonoBehaviour
 {
     [SerializeField] ScoreManager sM;
     [SerializeField] SoundManager soundM;
-    [SerializeField] PerformanceManager perM;
+    [SerializeField] PerformanceManager_Stage perM;
     [SerializeField] BlockGenerator bG;
 
     // 列数

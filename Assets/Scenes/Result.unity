@@ -339,9 +339,9 @@ RectTransform:
   m_Father: {fileID: 1240736699}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 150, y: -300}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 150, y: 100}
   m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &144596579
@@ -387,7 +387,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1168742256}
+      - m_Target: {fileID: 1168742259}
         m_MethodName: SceneChangeToTitleAfterFadeIn
         m_Mode: 1
         m_Arguments:
@@ -559,9 +559,9 @@ RectTransform:
   m_Father: {fileID: 1240736699}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -150, y: -300}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -150, y: 100}
   m_SizeDelta: {x: 240, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &280667917
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1168742256}
+      - m_Target: {fileID: 1168742259}
         m_MethodName: SceneChangeToStageAfterFadeIn
         m_Mode: 1
         m_Arguments:
@@ -887,8 +887,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: <FadeInFromOver>000
   _parsedText: 000
-  _outputText: 000
-  _effectText: 000
+  _outputText: 
+  _effectText: 
   _retainedText: <FadeInFromOver>000
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -997,8 +997,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: <FadeInFromOver>00000000
   _parsedText: 00000000
-  _outputText: 00000000
-  _effectText: 00000000
+  _outputText: 
+  _effectText: 
   _retainedText: <FadeInFromOver>00000000
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1185,8 +1185,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Score:'
   _parsedText: 'Score:'
-  _outputText: 'Score:'
-  _effectText: 'Score:'
+  _outputText: 
+  _effectText: 
   _retainedText: '<FadeInFromOver>Score:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1214,7 +1214,7 @@ GameObject:
   - component: {fileID: 1168742254}
   - component: {fileID: 1168742255}
   - component: {fileID: 1168742258}
-  - component: {fileID: 1168742256}
+  - component: {fileID: 1168742259}
   m_Layer: 0
   m_Name: UIManager
   m_TagString: UIManager
@@ -1234,7 +1234,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 874a858ded0f57140acdc2dc11beda27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sM: {fileID: 0}
 --- !u!114 &1168742255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1250,27 +1249,6 @@ MonoBehaviour:
   resultScoreNum: {fileID: 576008949}
   resultLevelNum: {fileID: 1511667804}
   resultLineNum: {fileID: 436025932}
---- !u!114 &1168742256
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1168742253}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b20211450801e44b98fb96c121753c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fIAO: {fileID: 1168742258}
-  sCM: {fileID: 1168742254}
-  soundM: {fileID: 0}
-  ready: {fileID: 0}
-  go: {fileID: 0}
-  levelUp: {fileID: 0}
-  gameOver01: {fileID: 0}
-  gameOver02: {fileID: 0}
-  initialFadeOut: 1
 --- !u!4 &1168742257
 Transform:
   m_ObjectHideFlags: 0
@@ -1297,9 +1275,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b6a0a930828de542887645bfb8306d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fadeSpeed: 0.002
   fadePanel: {fileID: 1229272514}
   image: {fileID: 1229272516}
+--- !u!114 &1168742259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168742253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a022782a2487ab46aeba1bdf2a06875, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fIAO: {fileID: 1168742258}
+  sCM: {fileID: 1168742254}
+  initialFadeOut: 1
 --- !u!1 &1191541960
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,8 +1619,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Level:'
   _parsedText: 'Level:'
-  _outputText: 'Level:'
-  _effectText: 'Level:'
+  _outputText: 
+  _effectText: 
   _retainedText: '<FadeInFromOver>Level:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1737,8 +1729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: <FadeInFromOver>000
   _parsedText: 000
-  _outputText: 000
-  _effectText: 000
+  _outputText: 
+  _effectText: 
   _retainedText: <FadeInFromOver>000
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1847,8 +1839,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Score:'
   _parsedText: 'Score:'
-  _outputText: 'Score:'
-  _effectText: 'Score:'
+  _outputText: 
+  _effectText: 
   _retainedText: '<FadeInFromOver>Score:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
