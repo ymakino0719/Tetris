@@ -16,17 +16,19 @@ public class ResultDisplayer : MonoBehaviour
     [SerializeField] Text resultScoreNum;
     [SerializeField] Text resultLevelNum;
     [SerializeField] Text resultLineNum;
-    // Start is called before the first frame update
+
+    string animaTag = "<FadeInFromOver>";
+
     void Start()
     {
-        DisplayResultScores();
+        InputResultScores();
     }
 
-    void DisplayResultScores()
+    void InputResultScores()
     {
-        resultScoreNum.text = resultScore.ToString();
-        resultLevelNum.text = resultLevel.ToString();
-        resultLineNum.text = resultLine.ToString();
+        resultScoreNum.text = animaTag + resultScore.ToString();
+        resultLevelNum.text = animaTag + resultLevel.ToString();
+        resultLineNum.text = animaTag + resultLine.ToString();
     }
 
     public int ResultScore

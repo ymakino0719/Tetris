@@ -19,6 +19,10 @@ public class PerformanceManager_Stage : MonoBehaviour
     [SerializeField] GameObject gameOver01;
     [SerializeField] GameObject gameOver02;
 
+    // パーティクル
+    // ブロックを消したときに生成する星のパーティクル
+    [SerializeField] GameObject starParticle;
+
     // シーン名のstring
     string title = "Title";
     string stage = "Stage";
@@ -36,7 +40,8 @@ public class PerformanceManager_Stage : MonoBehaviour
     float shrinkCoef = 0.95f;
     // 縮小最小サイズ（Y軸）
     float minSizeY = 0.05f;
-
+    // 行のデフォルトサイズ（Y軸）
+    float defaultRowSizeY = 1.0f;
     void Start()
     {
         // 開幕のフェードアウトの開始
@@ -188,18 +193,53 @@ public class PerformanceManager_Stage : MonoBehaviour
     {
         foreach(GameObject gao in bL.DeleteLineList)
         {
-            foreach (Transform child in gao.transform)
+            Vector3 scale = gao.transform.localScale;
+
+            scale.y *= shrinkCoef;
+
+            if (scale.y >= minSizeY)
             {
-                Vector3 scale = child.transform.localScale;
-
-                scale.y *= shrinkCoef;
-
+                // 最小サイズを下回らない場合、処理を続行
+                gao.transform.localScale = scale;
+            }
+            else
+            {
                 // 最小サイズを下回っている場合、縮小ループ処理を終了
-                if (scale.y >= minSizeY) child.transform.localScale = scale;
-                else shrinkBlocks = false;
+                shrinkBlocks = false;
+            }
+        }
+
+        // 縮小処理が終了したとき
+        if(!shrinkBlocks)
+        {
+            foreach (GameObject gao in bL.DeleteLineList)
+            {
+                // 行のGameObjectのサイズを元に戻す
+                Vector3 defaultSize = new Vector3(1, defaultRowSizeY, 1);
+                gao.transform.localScale = defaultSize;
             }
         }
     }
+
+    // ラインを消したときにパーティクルを生成する
+    public void GenerateParticlesWhenLineDeletes()
+    {
+        foreach (GameObject gao in bL.DeleteLineList)
+        {
+            // 1行につきパーティクルを左右それぞれ2つ生成
+            GameObject leftStar  = Instantiate(starParticle) as GameObject;
+            GameObject rightStar = Instantiate(starParticle) as GameObject;
+
+            // パーティクルの位置を補正
+            leftStar.transform.position  = gao.transform.position + new Vector3(-0.5f, -0.5f, -9.5f);
+            rightStar.transform.position = gao.transform.position + new Vector3(9.5f, -0.5f, -9.5f);
+
+            // パーティクルの向きを補正
+            leftStar.transform.eulerAngles  = new Vector3(0, 0, 135.0f);
+            rightStar.transform.eulerAngles = new Vector3(0, 0, -45.0f);
+        }
+    }
+
     public bool PlayingCutIn
     {
         set { playingCutIn = value; }

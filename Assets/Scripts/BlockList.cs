@@ -85,6 +85,8 @@ public class BlockList : MonoBehaviour
     {
         // 行を消し、落下させる処理
         int count = DeleteAndDropLines();
+        // ラインを消したときにパーティクルを生成する
+        perM.GenerateParticlesWhenLineDeletes();
         // 消去する行のリストを全削除
         deleteLineList.Clear();
 
@@ -135,6 +137,7 @@ public class BlockList : MonoBehaviour
 
         for (int cNum = 0; cNum < column; cNum++)
         {
+            // 消去する行かどうか
             if (deleteLineBool[cNum]) 
             {
                 // 消去する行の処理

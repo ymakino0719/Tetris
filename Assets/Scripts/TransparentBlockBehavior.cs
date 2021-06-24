@@ -85,7 +85,6 @@ public class TransparentBlockBehavior : MonoBehaviour
         // ①（すべての子オブジェクトについて、）範囲外ブロックがあるかどうか確認
         foreach (Transform tra in this.transform.GetChild(0).transform)
         {
-            Debug.Log("Count");
             // ブロックの場所が上方向の範囲外エリアだった場合、SpriteRenderer を非表示にする
             if (tra.position.y >= 19.5f)
             {

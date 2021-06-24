@@ -183,15 +183,6 @@ public class BlockBehavior : MonoBehaviour
         // ブロックの移動
         SlideBlock(downDir, true);
 
-        /*
-        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
-        if (moveCurrentBlock)
-        {
-            CheckAreasBlocksExist();
-            moveCurrentBlock = false;
-        }
-        */
-
         // 繰り返し
         StartCoroutine("FallBlockCoroutine");
     }

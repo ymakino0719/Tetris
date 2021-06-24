@@ -447,6 +447,116 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 144596577}
   m_CullTransparentMesh: 0
+--- !u!1 &167857221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167857222}
+  - component: {fileID: 167857225}
+  - component: {fileID: 167857224}
+  - component: {fileID: 167857223}
+  m_Layer: 5
+  m_Name: ResultScoreNum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &167857222
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167857221}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1841247643}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 110, y: 80}
+  m_SizeDelta: {x: 260, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &167857223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167857221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>00000000
+  _parsedText: 00000000
+  _outputText: 00000000
+  _effectText: 00000000
+  _retainedText: <FadeInFromOver>00000000
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
+--- !u!114 &167857224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167857221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9198113, g: 0.9428149, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 120
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: <FadeInFromOver>00000000
+--- !u!222 &167857225
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167857221}
+  m_CullTransparentMesh: 0
 --- !u!1 &206305380
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,226 +904,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &436025930
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 436025931}
-  - component: {fileID: 436025933}
-  - component: {fileID: 436025932}
-  - component: {fileID: 436025934}
-  m_Layer: 5
-  m_Name: LineNum
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &436025931
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436025930}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1841247643}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: -40}
-  m_SizeDelta: {x: 250, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &436025932
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436025930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9198113, g: 0.9428149, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 120
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: <FadeInFromOver>000
---- !u!222 &436025933
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436025930}
-  m_CullTransparentMesh: 0
---- !u!114 &436025934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 436025930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputText: <FadeInFromOver>000
-  _parsedText: 000
-  _outputText: 
-  _effectText: 
-  _retainedText: <FadeInFromOver>000
-  _effects:
-  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
-    _generalParamGroup:
-      autoStart: 1
-      autoPlay: 1
-      refreshMode: 1
-      tag: FadeInFromOver
-    _speed: 1
-    _time: 0
-    _effectState: 0
-  _settings:
-    retainedText: 0
-    tagSymbols: 0
-    markerSymbols: 0
---- !u!1 &576008947
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 576008948}
-  - component: {fileID: 576008950}
-  - component: {fileID: 576008949}
-  - component: {fileID: 576008951}
-  m_Layer: 5
-  m_Name: ScoreNum
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &576008948
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576008947}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1841247643}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 80}
-  m_SizeDelta: {x: 250, y: 60}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &576008949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576008947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.9198113, g: 0.9428149, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
-    m_FontSize: 50
-    m_FontStyle: 1
-    m_BestFit: 0
-    m_MinSize: 1
-    m_MaxSize: 120
-    m_Alignment: 3
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: <FadeInFromOver>00000000
---- !u!222 &576008950
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576008947}
-  m_CullTransparentMesh: 0
---- !u!114 &576008951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 576008947}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputText: <FadeInFromOver>00000000
-  _parsedText: 00000000
-  _outputText: 
-  _effectText: 
-  _retainedText: <FadeInFromOver>00000000
-  _effects:
-  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
-    _generalParamGroup:
-      autoStart: 1
-      autoPlay: 1
-      refreshMode: 1
-      tag: FadeInFromOver
-    _speed: 1
-    _time: 0
-    _effectState: 0
-  _settings:
-    retainedText: 0
-    tagSymbols: 0
-    markerSymbols: 0
 --- !u!1 &1127279718
 GameObject:
   m_ObjectHideFlags: 0
@@ -1127,7 +1017,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: 80}
+  m_AnchoredPosition: {x: -200, y: 80}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1151440931
@@ -1185,8 +1075,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Score:'
   _parsedText: 'Score:'
-  _outputText: 
-  _effectText: 
+  _outputText: 'Score:'
+  _effectText: 'Score:'
   _retainedText: '<FadeInFromOver>Score:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1246,9 +1136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6fc0a36a7480cb48a139ccb618781db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resultScoreNum: {fileID: 576008949}
-  resultLevelNum: {fileID: 1511667804}
-  resultLineNum: {fileID: 436025932}
+  resultScoreNum: {fileID: 167857224}
+  resultLevelNum: {fileID: 1480376895}
+  resultLineNum: {fileID: 1832545105}
 --- !u!4 &1168742257
 Transform:
   m_ObjectHideFlags: 0
@@ -1561,7 +1451,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: 20}
+  m_AnchoredPosition: {x: -200, y: 20}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1454538437
@@ -1619,8 +1509,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Level:'
   _parsedText: 'Level:'
-  _outputText: 
-  _effectText: 
+  _outputText: 'Level:'
+  _effectText: 'Level:'
   _retainedText: '<FadeInFromOver>Level:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1636,7 +1526,7 @@ MonoBehaviour:
     retainedText: 0
     tagSymbols: 0
     markerSymbols: 0
---- !u!1 &1511667802
+--- !u!1 &1480376892
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1644,24 +1534,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1511667803}
-  - component: {fileID: 1511667805}
-  - component: {fileID: 1511667804}
-  - component: {fileID: 1511667806}
+  - component: {fileID: 1480376893}
+  - component: {fileID: 1480376896}
+  - component: {fileID: 1480376895}
+  - component: {fileID: 1480376894}
   m_Layer: 5
-  m_Name: LevelNum
+  m_Name: ResultLevelNum
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &1511667803
+--- !u!224 &1480376893
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511667802}
+  m_GameObject: {fileID: 1480376892}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -1671,16 +1561,47 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 90, y: 20}
-  m_SizeDelta: {x: 250, y: 60}
+  m_AnchoredPosition: {x: 110, y: 20}
+  m_SizeDelta: {x: 260, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1511667804
+--- !u!114 &1480376894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511667802}
+  m_GameObject: {fileID: 1480376892}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>0
+  _parsedText: 0
+  _outputText: 0
+  _effectText: 0
+  _retainedText: <FadeInFromOver>0
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
+--- !u!114 &1480376895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480376892}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
@@ -1706,46 +1627,15 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <FadeInFromOver>000
---- !u!222 &1511667805
+  m_Text: <FadeInFromOver>0
+--- !u!222 &1480376896
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511667802}
+  m_GameObject: {fileID: 1480376892}
   m_CullTransparentMesh: 0
---- !u!114 &1511667806
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1511667802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _inputText: <FadeInFromOver>000
-  _parsedText: 000
-  _outputText: 
-  _effectText: 
-  _retainedText: <FadeInFromOver>000
-  _effects:
-  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
-    _generalParamGroup:
-      autoStart: 1
-      autoPlay: 1
-      refreshMode: 1
-      tag: FadeInFromOver
-    _speed: 1
-    _time: 0
-    _effectState: 0
-  _settings:
-    retainedText: 0
-    tagSymbols: 0
-    markerSymbols: 0
 --- !u!1 &1545346521
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,7 +1671,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -210, y: -40}
+  m_AnchoredPosition: {x: -200, y: -40}
   m_SizeDelta: {x: 300, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1545346523
@@ -1839,8 +1729,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputText: '<FadeInFromOver>Score:'
   _parsedText: 'Score:'
-  _outputText: 
-  _effectText: 
+  _outputText: 'Score:'
+  _effectText: 'Score:'
   _retainedText: '<FadeInFromOver>Score:'
   _effects:
   - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
@@ -1856,6 +1746,116 @@ MonoBehaviour:
     retainedText: 0
     tagSymbols: 0
     markerSymbols: 0
+--- !u!1 &1832545102
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1832545103}
+  - component: {fileID: 1832545106}
+  - component: {fileID: 1832545105}
+  - component: {fileID: 1832545104}
+  m_Layer: 5
+  m_Name: ResultLineNum
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1832545103
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832545102}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1841247643}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 110, y: -40}
+  m_SizeDelta: {x: 260, y: 60}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1832545104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832545102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1220488118, guid: 9abd0afa941745643b78b8f2c0918690, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _inputText: <FadeInFromOver>0
+  _parsedText: 0
+  _outputText: 0
+  _effectText: 0
+  _retainedText: <FadeInFromOver>0
+  _effects:
+  - _preset: {fileID: 11400000, guid: 9f0daebc28e20ae469c3e5bc6344ed74, type: 2}
+    _generalParamGroup:
+      autoStart: 1
+      autoPlay: 1
+      refreshMode: 1
+      tag: FadeInFromOver
+    _speed: 1
+    _time: 0
+    _effectState: 0
+  _settings:
+    retainedText: 0
+    tagSymbols: 0
+    markerSymbols: 0
+--- !u!114 &1832545105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832545102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.9198113, g: 0.9428149, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 9b39851df5a46814f8c2a6495499c476, type: 3}
+    m_FontSize: 50
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 1
+    m_MaxSize: 120
+    m_Alignment: 3
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: <FadeInFromOver>0
+--- !u!222 &1832545106
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1832545102}
+  m_CullTransparentMesh: 0
 --- !u!1 &1841247642
 GameObject:
   m_ObjectHideFlags: 0
@@ -1866,7 +1866,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1841247643}
   m_Layer: 5
-  m_Name: Text
+  m_Name: AllText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1887,9 +1887,9 @@ RectTransform:
   - {fileID: 1151440930}
   - {fileID: 1454538436}
   - {fileID: 1545346522}
-  - {fileID: 576008948}
-  - {fileID: 1511667803}
-  - {fileID: 436025931}
+  - {fileID: 167857222}
+  - {fileID: 1480376893}
+  - {fileID: 1832545103}
   m_Father: {fileID: 1240736699}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
