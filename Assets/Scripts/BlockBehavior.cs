@@ -13,6 +13,7 @@ public class BlockBehavior : MonoBehaviour
     SceneChangeManager sCM;
     ScoreManager sM;
     PerformanceManager_Stage perM;
+    InputManager iM;
 
     SoundManager soundM;
 
@@ -70,6 +71,7 @@ public class BlockBehavior : MonoBehaviour
         sCM = uiM.GetComponent<SceneChangeManager>();
         sM = uiM.GetComponent<ScoreManager>();
         perM = uiM.GetComponent<PerformanceManager_Stage>();
+        iM = uiM.GetComponent<InputManager>();
 
         soundM = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
 
@@ -178,7 +180,7 @@ public class BlockBehavior : MonoBehaviour
         yield return new WaitForSeconds(intervalTime);
 
         // 下入力中、またはポーズ中は自動で下に落下しない
-        while (Input.GetButton("DownKey") || pM.Paused) yield return null;
+        while (iM.DownKey_Pressing || pM.Paused) yield return null;
 
         // ブロックの移動
         SlideBlock(downDir, true);
@@ -297,40 +299,49 @@ public class BlockBehavior : MonoBehaviour
     // 単押し入力移動の処理
     void ShortPressProcess()
     {
-        if (Input.GetButtonDown("RightKey"))
+        // 右ボタンが1回押されたとき
+        if (iM.RightKey_Press)
         {
             SlideBlock(rightDir, false);
+            iM.RightKey_Press = false;
         }
 
-        if (Input.GetButtonDown("LeftKey"))
+        // 左ボタンが1回押されたとき
+        if (iM.LeftKey_Press)
         {
             SlideBlock(leftDir, false);
+            iM.LeftKey_Press = false;
         }
 
-        if (Input.GetButtonDown("DownKey"))
+        // 下ボタンが1回押されたとき
+        if (iM.DownKey_Press)
         {
             SlideBlock(downDir, true);
+            iM.DownKey_Press = false;
         }
 
-        if (Input.GetButtonDown("UpKey"))
+        // 上ボタンが1回押されたとき
+        if (iM.UpKey_Press)
         {
             // 回転
             RotateBlock();
 
             // 回転時の効果音を流す
             soundM.PlaySFX(3);
+
+            iM.UpKey_Press = false;
         }
     }
 
     // 長押し入力移動の処理
     void LongPressProcess()
     {
-        if (Input.GetButton("RightKey") && !Input.GetButton("LeftKey"))
+        if (iM.RightKey_Pressing && !iM.LeftKey_Pressing)
         {
             // 右矢印だけ押されているときの処理
             LongPressMovement(rightDir, ref longPressTime_Hor, ref timeCoef_Hor, false);
         }
-        else if (!Input.GetButton("RightKey") && Input.GetButton("LeftKey"))
+        else if (!iM.RightKey_Pressing && iM.LeftKey_Pressing)
         {
             // 左矢印だけ押されているときの処理
             LongPressMovement(leftDir, ref longPressTime_Hor, ref timeCoef_Hor, false);
@@ -342,7 +353,7 @@ public class BlockBehavior : MonoBehaviour
             timeCoef_Hor = 1.0f;
         }
 
-        if (Input.GetButton("DownKey"))
+        if (iM.DownKey_Pressing)
         {
             // 下矢印が押されているときの処理
             LongPressMovement(downDir, ref longPressTime_Ver, ref timeCoef_Ver, true);

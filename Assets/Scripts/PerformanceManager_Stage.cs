@@ -37,7 +37,7 @@ public class PerformanceManager_Stage : MonoBehaviour
     // 消去する行の全てのブロックを縮める
     bool shrinkBlocks = false;
     // 縮小係数
-    float shrinkCoef = 0.95f;
+    float shrinkCoef = 0.87f;
     // 縮小最小サイズ（Y軸）
     float minSizeY = 0.05f;
     // 行のデフォルトサイズ（Y軸）
@@ -57,7 +57,7 @@ public class PerformanceManager_Stage : MonoBehaviour
         // ReadyとGoのカットインを出す
         StartCoroutine("StartReadyAndGoCutIn");
     }
-    void Update()
+    void FixedUpdate()
     {
         // 消去する行が持つ全ての子オブジェクトの縦幅を縮める
         if(shrinkBlocks) ShrinkDeleteLineBlocks();
@@ -112,7 +112,7 @@ public class PerformanceManager_Stage : MonoBehaviour
     // カットイン処理；Readyの文字の後にGoを出す。Goが出たらブロックが操作できるように
     IEnumerator StartReadyAndGoCutIn()
     {
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
 
         ready.SetActive(true);
 

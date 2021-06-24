@@ -35,7 +35,7 @@ public class FadeInAndOut : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         // FadeIn, FadeOutの実行
         if (fadeIn || fadeOut) FadeProcess();
@@ -51,6 +51,8 @@ public class FadeInAndOut : MonoBehaviour
             image.raycastTarget = true;
             // 初期状態は透明
             alpha = 0;
+            // 初期透明度の設定
+            image.color = new Color(red, green, blue, alpha);
             // fadeIn処理の実行
             fadeIn = true;
         }
@@ -66,6 +68,8 @@ public class FadeInAndOut : MonoBehaviour
             image.raycastTarget = true;
             // 初期状態は不透明
             alpha = 1;
+            // 初期透明度の設定
+            image.color = new Color(red, green, blue, alpha);
             // fadeIn処理の実行
             fadeOut = true;
         }
