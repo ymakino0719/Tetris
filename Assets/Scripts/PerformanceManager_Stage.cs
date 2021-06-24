@@ -37,9 +37,9 @@ public class PerformanceManager_Stage : MonoBehaviour
     // 消去する行の全てのブロックを縮める
     bool shrinkBlocks = false;
     // 縮小係数
-    float shrinkCoef = 0.87f;
+    float shrinkCoef = 0.83f;
     // 縮小最小サイズ（Y軸）
-    float minSizeY = 0.05f;
+    float minSizeY = 0.02f;
     // 行のデフォルトサイズ（Y軸）
     float defaultRowSizeY = 1.0f;
     void Start()
