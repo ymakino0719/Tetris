@@ -37,7 +37,7 @@ public class PerformanceManager_Stage : MonoBehaviour
     // 消去する行の全てのブロックを縮める
     bool shrinkBlocks = false;
     // 縮小係数
-    float shrinkCoef = 0.83f;
+    float shrinkCoef = 0.75f;
     // 縮小最小サイズ（Y軸）
     float minSizeY = 0.02f;
     // 行のデフォルトサイズ（Y軸）
@@ -188,7 +188,7 @@ public class PerformanceManager_Stage : MonoBehaviour
         bL.DeleteLineProcess();
     }
 
-    // 消去する行が持つ全ての子オブジェクトの縦幅を縮める
+    // 消去する行オブジェクトの縦幅を縮める
     void ShrinkDeleteLineBlocks()
     {
         foreach(GameObject gao in bL.DeleteLineList)

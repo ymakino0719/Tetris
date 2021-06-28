@@ -36,7 +36,7 @@ public class ScoreManager : MonoBehaviour
     // ブロック移動のインターバル時間の最小値
     float intervalTime_Min = 0.1f;
     // ブロック移動のインターバル時間の減少係数
-    float decreaseCoef = 0.9f;
+    float decreaseCoef = 0.75f;
 
     // Start is called before the first frame update
     void Start()
@@ -91,14 +91,14 @@ public class ScoreManager : MonoBehaviour
     // ラインを消した時、またはレベルが上がった時、背景スピードや画像を変更する
     public void ChangeBackground_WhenLineOrLevelIncreased(int count)
     {
-        // ブロック落下のインターバル時間を減少させる
-        DecreaseIntervalTimeOfBlockMovement();
-
         if (levelUp)
         {
             // レベルアップ時
             // レベルアップのカットインを出す
             perM.StartCoroutine("StartLevelUpCutIn");
+
+            // ブロック降下を早くする（ブロック落下のインターバル時間を減少させる）
+            DecreaseIntervalTimeOfBlockMovement();
 
             // スクロール速度を初期化
             bB.ResetScrollSpeed();
@@ -119,7 +119,6 @@ public class ScoreManager : MonoBehaviour
     }
 
     // ブロック落下のインターバル時間を減少させる
-    // ※この関数及び変数をどこに置くか迷ったが、暫定的にScoreManagerに置くことにした
     void DecreaseIntervalTimeOfBlockMovement()
     {
         float a = intervalTime * decreaseCoef;

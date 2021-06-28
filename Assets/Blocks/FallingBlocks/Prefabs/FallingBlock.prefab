@@ -94,3 +94,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21647a4adb41ff44ac3f4760e4c1213, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sP: {fileID: 2945633720104629754}
+  fallingBlockImage:
+  - {fileID: 21300000, guid: e29b89153c0d7a144a67cbadf21f8274, type: 3}
+  - {fileID: 21300000, guid: cb6fa325257162e4f9b8b24c087358f6, type: 3}
+  - {fileID: 21300000, guid: 3836099aff66c0c48887017f3458300d, type: 3}
+  - {fileID: 21300000, guid: 4f107bb038708a24daffeb7c0a24f23a, type: 3}
+  - {fileID: 21300000, guid: 73e7b6f07103f004eb9f1bb518d4bb31, type: 3}
+  - {fileID: 21300000, guid: 24bd931b6e4b46e45a9a8beebc8c7d50, type: 3}
+  - {fileID: 21300000, guid: 7b66877cfcc921044a5773b91cf48673, type: 3}

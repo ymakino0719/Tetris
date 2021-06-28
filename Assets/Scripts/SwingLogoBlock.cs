@@ -16,7 +16,7 @@ public class SwingLogoBlock : MonoBehaviour
     // 現在傾いている角度
     float currentTiltAngle = 0;
     // 傾ける角度
-    float tiltAngle = 5.0f;
+    float tiltAngle = 8.0f;
     // 傾ける速度
     float tiltSpeed = 20.0f;
 

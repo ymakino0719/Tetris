@@ -15,6 +15,9 @@ public class BlockGenerator : MonoBehaviour
     [SerializeField] Sprite[] transparentBlockImage = new Sprite[blockNum];
 
     int nextNum;
+    // 次に生成可能なテトリミノの、残りの種類のリスト
+    // （テトリミノは1セット7種類が重複なしでランダムで生成され、1セットが終了次第、次のセットに移行する）
+    List<int> tetrimino_RemainingTypes = new List<int>();
 
     // CurrentBlockのPrefabを子に持たせる親オブジェクト
     [SerializeField] GameObject currentBlockParent;
@@ -25,7 +28,8 @@ public class BlockGenerator : MonoBehaviour
 
     void Start()
     {
-        nextNum = Random.Range(0, blockNum);
+        // 次のテトリミノの種類をランダムで決定
+        nextNum = DecideNextBlock();
 
         // （開幕処理）最初のブロックを生成
         GenerateCurrentBlock();
@@ -33,6 +37,22 @@ public class BlockGenerator : MonoBehaviour
         GenerateTransparentBlock();
         // （開幕処理）次のブロックを生成
         GenerateNextBlock();
+    }
+
+    // 次に生成するテトリミノの種類を決定する
+    int DecideNextBlock()
+    {
+        // 1セット7種類の生成が終わっている場合は、次のリストを生成する（0～blockNum を順番に入れるだけ）
+        if (tetrimino_RemainingTypes.Count == 0) for (int i = 0; i < blockNum; i++) tetrimino_RemainingTypes.Add(i);
+
+        // 次に生成するテトリミノの種類を、生成可能な残りのリストを参考に決定する
+        int rnd = Random.Range(0, tetrimino_RemainingTypes.Count);
+        int next = tetrimino_RemainingTypes[rnd];
+
+        // 生成したテトリミノをリストから除外
+        tetrimino_RemainingTypes.RemoveAt(rnd);
+
+        return next;
     }
 
     // 今のブロックを生成する
@@ -55,7 +75,7 @@ public class BlockGenerator : MonoBehaviour
     public void GenerateNextBlock()
     {
         // 次のテトリミノの種類をランダムで決定
-        nextNum = Random.Range(0, blockNum);
+        nextNum = DecideNextBlock();
 
         // 生成するブロックのタイプを指定
         // blockType 1: 次に落下させるブロック（Nextに表示する）

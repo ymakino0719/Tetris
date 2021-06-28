@@ -252,9 +252,6 @@ public class BlockBehavior : MonoBehaviour
 
             // 各ブロックを、対応する行のリストの子オブジェクトとして再配置
             currentBlockList[j].transform.parent = bL.StackedLineList[y].transform;
-
-            // 各ブロックの回転方向を修正しておく
-            currentBlockList[j].transform.eulerAngles = Vector3.up;
         }
     }
 
@@ -419,6 +416,12 @@ public class BlockBehavior : MonoBehaviour
         {
             // その他の場合は普通に90度ずつ、計4パターンの回転を実施
             transform.Rotate(0, 0, 90.0f);
+        }
+
+        // 各ブロックのスプライトの向きは、ブロック全体に回転を加えても常に上方向を向くように修正する
+        for (int j = 0; j < currentBlockList.Count; j++)
+        {
+            currentBlockList[j].transform.eulerAngles = Vector3.up;
         }
 
         moveCurrentBlock = true;
