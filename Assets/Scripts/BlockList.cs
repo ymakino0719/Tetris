@@ -25,6 +25,12 @@ public class BlockList : MonoBehaviour
     // 消去する行のリスト
     List<GameObject> deleteLineList = new List<GameObject>();
 
+    // Holdブロックの種類（開幕のHoldブロックはないため、-1を代入）
+    int holdBlockNum = -1;
+
+    // ブロックを既にホールドしているかどうか（ホールド後、そのブロックの降下が終わるまで再ホールドはできない）
+    bool holding = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -220,5 +226,16 @@ public class BlockList : MonoBehaviour
     public List<GameObject> DeleteLineList
     {
         get { return deleteLineList; }
+    }
+
+    public int HoldBlockNum
+    {
+        set { holdBlockNum = value; }
+        get { return holdBlockNum; }
+    }
+    public bool Holding
+    {
+        set { holding = value; }
+        get { return holding; }
     }
 }

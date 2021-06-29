@@ -17,6 +17,10 @@ public class InputManager : MonoBehaviour
     bool rightKey_Press = false;
     bool rightKey_Pressing = false;
 
+    bool holdKey_Press = false;
+
+    bool hardDropKey_Press = false;
+
     string upKey = "UpKey";
     string downKey = "DownKey";
     string leftKey = "LeftKey";
@@ -25,15 +29,21 @@ public class InputManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        CheckPressKey(upKey, ref upKey_Press, ref upKey_Pressing);
-        CheckPressKey(downKey, ref downKey_Press, ref downKey_Pressing);
-        CheckPressKey(leftKey, ref leftKey_Press, ref leftKey_Pressing);
-        CheckPressKey(rightKey, ref rightKey_Press, ref rightKey_Pressing);
+        // 上下左右キー入力受付
+        CheckPressArrowKey(upKey, ref upKey_Press, ref upKey_Pressing);
+        CheckPressArrowKey(downKey, ref downKey_Press, ref downKey_Pressing);
+        CheckPressArrowKey(leftKey, ref leftKey_Press, ref leftKey_Pressing);
+        CheckPressArrowKey(rightKey, ref rightKey_Press, ref rightKey_Pressing);
+
+        // ホールドキー入力受付
+        CheckPressHoldKey();
+
+        // ハードドロップキー入力受付
+        CheckPressHardDropKey();
     }
 
     // ボタンを押しているかの確認
-    // （※単押し時の処理は BlockBehavior で処理を行い、）
-    void CheckPressKey(string keyDir, ref bool keyPress, ref bool keyPressing)
+    void CheckPressArrowKey(string keyDir, ref bool keyPress, ref bool keyPressing)
     {
         // ボタンを押したとき
         if (Input.GetButtonDown(keyDir))
@@ -48,6 +58,16 @@ public class InputManager : MonoBehaviour
             keyPressing = false;
         }
     }
+
+    void CheckPressHoldKey()
+    {
+        if(Input.GetButtonDown("HoldKey")) holdKey_Press = true;
+    }
+    void CheckPressHardDropKey()
+    {
+        if (Input.GetButtonDown("HardDropKey")) hardDropKey_Press = true;
+    }
+
     // UIボタンからのキー入力
     // ボタンが押されたとき、単押し・長押し双方とも true を代入
     public void PointerDown_UpKey()
@@ -127,5 +147,15 @@ public class InputManager : MonoBehaviour
     public bool RightKey_Pressing
     {
         get { return rightKey_Pressing; }
+    }
+    public bool HoldKey_Press
+    {
+        set { holdKey_Press = value; }
+        get { return holdKey_Press; }
+    }
+    public bool HardDropKey_Press
+    {
+        set { hardDropKey_Press = value; }
+        get { return hardDropKey_Press; }
     }
 }

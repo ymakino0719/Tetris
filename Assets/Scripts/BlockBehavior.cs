@@ -47,13 +47,8 @@ public class BlockBehavior : MonoBehaviour
     // ゲームオーバー条件
     bool gameOver = false;
 
-    // このブロックがテトリミノ「I」のとき
-    bool tetrimino_I = false;
-    // このブロックがテトリミノ「O」のとき
-    bool tetrimino_O = false;
-
-    // ブロックが移動したかどうか（移動先のエリアの確認が必要なため）
-    bool moveCurrentBlock = false;
+    // このブロックの種類（テトリミノパターン）
+    int tetriminoType = -1;
 
     // 範囲外のブロックが存在し、非表示にしているかどうか
     bool outOfRangeAreaBlocksExist = false;
@@ -74,10 +69,6 @@ public class BlockBehavior : MonoBehaviour
         iM = uiM.GetComponent<InputManager>();
 
         soundM = GameObject.FindWithTag("SoundManager").GetComponent<SoundManager>();
-
-        // このブロックがテトリミノの「I」あるいは「O」に該当するか確認
-        if (this.transform.tag == "Tetrimino_I") tetrimino_I = true;
-        if (this.transform.tag == "Tetrimino_O") tetrimino_O = true;
 
         // インターバル時間の更新
         intervalTime = sM.IntervalTime;
@@ -122,18 +113,14 @@ public class BlockBehavior : MonoBehaviour
     {
         if(!gameOver && !pM.Paused && !perM.PlayingCutIn)
         {
+            // ホールド操作入力時の処理
+            HoldPressProcess();
             // 単押し入力移動の処理
             ShortPressProcess();
             // 長押し入力移動の処理
             LongPressProcess();
-        }
-
-        // ブロックが動いたときの処理;
-        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
-        if (moveCurrentBlock)
-        {
-            CheckAreasBlocksExist();
-            moveCurrentBlock = false;
+            // ハードドロップ操作入力時
+            HardDropPressProcess();
         }
     }
 
@@ -217,7 +204,10 @@ public class BlockBehavior : MonoBehaviour
         // 全てのブロックの移動先が画面外でなくブロックもない場合、移動を実行する
         this.gameObject.transform.Translate(dir, Space.World);
 
-        moveCurrentBlock = true;
+        // ブロックが動いたときの処理;
+        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+        CheckAreasBlocksExist();
+
         dCBM.MoveCurrentBlock = true;
     }
 
@@ -227,6 +217,9 @@ public class BlockBehavior : MonoBehaviour
     {
         // ブロックのスタック
         StackBlocks();
+
+        // ブロックの降下後、ホールド機能を有効にする
+        bL.Holding = false;
 
         // 落下地点として表示されていた透明なブロックを、更新のため削除する
         bG.DestroyBlockGameObject(bG.TransparentBlockParent);
@@ -387,7 +380,7 @@ public class BlockBehavior : MonoBehaviour
         bool normalRotate = false, rightRotate = false, leftRotate = false;
 
         // テトリミノの「O」の場合回転させないため、終了
-        if (tetrimino_O) return;
+        if (tetriminoType == 3) return;
 
         // ずらさないで回転を試す
         normalRotate = RotatePossibility(Vector3.zero);
@@ -405,7 +398,7 @@ public class BlockBehavior : MonoBehaviour
 
         // 回転
         // テトリミノの「I」は回転を制限
-        if(tetrimino_I)
+        if(tetriminoType == 0)
         {
             // テトリミノの「I」は1パターンの回転しかしないようにする
             // 既に回転していたら元に戻す（-90度）
@@ -424,7 +417,10 @@ public class BlockBehavior : MonoBehaviour
             currentBlockList[j].transform.eulerAngles = Vector3.up;
         }
 
-        moveCurrentBlock = true;
+        // ブロックが動いたときの処理;
+        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+        CheckAreasBlocksExist();
+
         dCBM.MoveCurrentBlock = true;
     }
 
@@ -436,7 +432,7 @@ public class BlockBehavior : MonoBehaviour
             // 回転情報
             // ※テトリミノの「I」に限り、回転を制限（もう回転していたら反対方向に回転）
             Quaternion rot = Quaternion.Euler(0, 0, 90.0f);
-            if (tetrimino_I && Vector3.Angle(Vector3.up, transform.up) >= 45) rot = Quaternion.Euler(0, 0, -90.0f);
+            if (tetriminoType == 0 && Vector3.Angle(Vector3.up, transform.up) >= 45) rot = Quaternion.Euler(0, 0, -90.0f);
             // 回転させるブロック（dir分だけずらす）
             Vector3 point = gao.transform.position + dir;
             // 回転の中心となる位置（dir分だけずらす）
@@ -453,5 +449,94 @@ public class BlockBehavior : MonoBehaviour
 
         // 全てのブロックで回転が可能の時、trueを返す
         return true;
+    }
+
+    // Hold操作が押されたときの処理
+    void HoldPressProcess()
+    {
+        if(iM.HoldKey_Press)
+        {
+            // ブロックを既にホールドしているかどうか（ホールド後、そのブロックの降下が終わるまで再ホールドはできない）
+            // 既にホールドを使っていた場合、処理を終了
+            if (!bL.Holding) bL.Holding = true;
+            else return;
+
+            // Holdブロックが存在するかどうか（開始1回目のホールドかどうか）
+            if(bL.HoldBlockNum == -1)
+            {
+                // 1回目のホールド入力があった時の操作（Holdブロックがないとき）
+                bG.HoldProcess_FirstTime(tetriminoType);
+            }
+            else
+            {
+                // 2回目以降のホールド入力があった時の操作（Holdブロックがあるとき）
+                bG.HoldProcess_AfterTheSecondTime(tetriminoType);
+            }
+
+            // HoldBlockの種類の情報を更新する
+            bL.HoldBlockNum = tetriminoType;
+
+            iM.HoldKey_Press = false;
+
+            // Holdされるこのオブジェクトを破棄する
+            Destroy(this.gameObject);
+        }
+    }
+
+    // ハードドロップ操作入力時の処理
+    void HardDropPressProcess()
+    {
+        if(iM.HardDropKey_Press)
+        {
+            // このブロックが降下できる量
+            float downAmount = 0.0f;
+            // 確認箇所にブロックが存在するかどうか
+            bool buttomPoint = false;
+
+            while (true)
+            {
+                foreach (Transform gao in this.transform)
+                {
+                    Vector3 vec = gao.position;
+                    vec.y -= downAmount;
+
+                    // 確認箇所が最下層あるいはブロックが存在する場合、buttomPoint に true を返す
+                    if (Mathf.RoundToInt(vec.y) <= -1.0f || bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)]) buttomPoint = true;
+                }
+
+                if (buttomPoint)
+                {
+                    // 最下層は１つ上のマスと判断し、１つ上に戻す（ただし、currentBlockが初期位置から降下できない場合は戻さない）
+                    if (downAmount > 0.0f) downAmount -= 1.0f;
+                    // 確認箇所に１つでもブロックが存在している場合、ループを終了
+                    break;
+                }
+                else
+                {
+                    // そうでない場合、１つ下にずらして確認を繰り返す
+                    downAmount += 1.0f;
+                }
+            }
+
+            // TransparentBlockを落下予想地点に移動させる
+            Vector3 point = transform.position;
+            point.y -= downAmount;
+            transform.position = point;
+
+            // ブロックが動いたときの処理;
+            // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+            CheckAreasBlocksExist();
+
+            iM.HardDropKey_Press = false;
+
+            // 終了処理
+            EndProcess01();
+        }
+    }
+
+    public int TetriminoType
+    {
+        set { tetriminoType = value; }
+        get { return tetriminoType; }
     }
 }

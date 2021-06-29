@@ -55,7 +55,7 @@ public class TransparentBlockBehavior : MonoBehaviour
                 Vector3 vec = gao.position;
                 vec.y -= downAmount;
 
-                // 確認箇所が最下層あるいはブロックが存在する場合、trueを返す
+                // 確認箇所が最下層あるいはブロックが存在する場合、buttomPoint に true を返す
                 if (Mathf.RoundToInt(vec.y) <= -1.0f || bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)]) buttomPoint = true;
             }
 
