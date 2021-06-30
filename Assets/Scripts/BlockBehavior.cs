@@ -113,14 +113,28 @@ public class BlockBehavior : MonoBehaviour
     {
         if(!gameOver && !pM.Paused && !perM.PlayingCutIn)
         {
+            InputPressProcess();
+        }
+    }
+
+    void InputPressProcess()
+    {
+        if (iM.HoldKey_Press)
+        {
             // ホールド操作入力時の処理
             HoldPressProcess();
+        }
+        else if (iM.HardDropKey_Press)
+        {
+            // ハードドロップ操作入力時
+            HardDropPressProcess();
+        }
+        else
+        {
             // 単押し入力移動の処理
             ShortPressProcess();
             // 長押し入力移動の処理
             LongPressProcess();
-            // ハードドロップ操作入力時
-            HardDropPressProcess();
         }
     }
 
@@ -454,12 +468,12 @@ public class BlockBehavior : MonoBehaviour
     // Hold操作が押されたときの処理
     void HoldPressProcess()
     {
-        if(iM.HoldKey_Press)
+        iM.HoldKey_Press = false;
+
+        if (!bL.Holding)
         {
             // ブロックを既にホールドしているかどうか（ホールド後、そのブロックの降下が終わるまで再ホールドはできない）
-            // 既にホールドを使っていた場合、処理を終了
-            if (!bL.Holding) bL.Holding = true;
-            else return;
+            bL.Holding = true;
 
             // Holdブロックが存在するかどうか（開始1回目のホールドかどうか）
             if(bL.HoldBlockNum == -1)
@@ -476,8 +490,6 @@ public class BlockBehavior : MonoBehaviour
             // HoldBlockの種類の情報を更新する
             bL.HoldBlockNum = tetriminoType;
 
-            iM.HoldKey_Press = false;
-
             // Holdされるこのオブジェクトを破棄する
             Destroy(this.gameObject);
         }
@@ -486,52 +498,49 @@ public class BlockBehavior : MonoBehaviour
     // ハードドロップ操作入力時の処理
     void HardDropPressProcess()
     {
-        if(iM.HardDropKey_Press)
+        iM.HardDropKey_Press = false;
+
+        // このブロックが降下できる量
+        float downAmount = 0.0f;
+        // 確認箇所にブロックが存在するかどうか
+        bool buttomPoint = false;
+
+        while (true)
         {
-            // このブロックが降下できる量
-            float downAmount = 0.0f;
-            // 確認箇所にブロックが存在するかどうか
-            bool buttomPoint = false;
-
-            while (true)
+            foreach (Transform gao in this.transform)
             {
-                foreach (Transform gao in this.transform)
-                {
-                    Vector3 vec = gao.position;
-                    vec.y -= downAmount;
+                Vector3 vec = gao.position;
+                vec.y -= downAmount;
 
-                    // 確認箇所が最下層あるいはブロックが存在する場合、buttomPoint に true を返す
-                    if (Mathf.RoundToInt(vec.y) <= -1.0f || bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)]) buttomPoint = true;
-                }
-
-                if (buttomPoint)
-                {
-                    // 最下層は１つ上のマスと判断し、１つ上に戻す（ただし、currentBlockが初期位置から降下できない場合は戻さない）
-                    if (downAmount > 0.0f) downAmount -= 1.0f;
-                    // 確認箇所に１つでもブロックが存在している場合、ループを終了
-                    break;
-                }
-                else
-                {
-                    // そうでない場合、１つ下にずらして確認を繰り返す
-                    downAmount += 1.0f;
-                }
+                // 確認箇所が最下層あるいはブロックが存在する場合、buttomPoint に true を返す
+                if (Mathf.RoundToInt(vec.y) <= -1.0f || bL.Blocks[Mathf.RoundToInt(vec.x), Mathf.RoundToInt(vec.y)]) buttomPoint = true;
             }
 
-            // TransparentBlockを落下予想地点に移動させる
-            Vector3 point = transform.position;
-            point.y -= downAmount;
-            transform.position = point;
-
-            // ブロックが動いたときの処理;
-            // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
-            CheckAreasBlocksExist();
-
-            iM.HardDropKey_Press = false;
-
-            // 終了処理
-            EndProcess01();
+            if (buttomPoint)
+            {
+                // 最下層は１つ上のマスと判断し、１つ上に戻す（ただし、currentBlockが初期位置から降下できない場合は戻さない）
+                if (downAmount > 0.0f) downAmount -= 1.0f;
+                // 確認箇所に１つでもブロックが存在している場合、ループを終了
+                break;
+            }
+            else
+            {
+                // そうでない場合、１つ下にずらして確認を繰り返す
+                downAmount += 1.0f;
+            }
         }
+
+        // TransparentBlockを落下予想地点に移動させる
+        Vector3 point = transform.position;
+        point.y -= downAmount;
+        transform.position = point;
+
+        // ブロックが動いたときの処理;
+        // ブロックの移動先が（上方向の）範囲外エリアかどうか確認
+        CheckAreasBlocksExist();
+
+        // 終了処理
+        EndProcess01();
     }
 
     public int TetriminoType

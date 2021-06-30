@@ -13,6 +13,8 @@ public class PerformanceManager_Stage : MonoBehaviour
     [SerializeField] BlockList bL;
 
     // カットイン
+    [SerializeField] GameObject cutInParent;
+
     [SerializeField] GameObject ready;
     [SerializeField] GameObject go;
     [SerializeField] GameObject levelUp;
@@ -46,13 +48,6 @@ public class PerformanceManager_Stage : MonoBehaviour
     {
         // 開幕のフェードアウトの開始
         if (initialFadeOut) fIAO.StartFadeOut();
-
-        // （開幕処理）全カットインを非表示にしておく
-        ready.SetActive(false);
-        go.SetActive(false);
-        levelUp.SetActive(false);
-        gameOver01.SetActive(false);
-        gameOver02.SetActive(false);
 
         // ReadyとGoのカットインを出す
         StartCoroutine("StartReadyAndGoCutIn");
@@ -114,19 +109,24 @@ public class PerformanceManager_Stage : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        ready.SetActive(true);
+        // Ready のカットインを生成
+        GameObject r = GenerateCutIn(ready);
 
         yield return new WaitForSeconds(1.5f);
 
-        ready.SetActive(false);
-        go.SetActive(true);
+        // Ready のカットインを削除
+        Destroy(r);
+
+        // Go のカットインを生成
+        GameObject g = GenerateCutIn(go);
 
         // Goの効果音を流す
         soundM.PlaySFX(0);
 
         yield return new WaitForSeconds(0.9f);
 
-        go.SetActive(false);
+        // Go のカットインを削除
+        Destroy(g);
 
         // 開幕の操作不能パネルを非表示にする
         pM.HideInoperablePanel();
@@ -141,14 +141,16 @@ public class PerformanceManager_Stage : MonoBehaviour
     // カットイン処理；レベルアップ時にLevelUpの文字を出す（※このカットイン中はブロック操作が可能）
     public IEnumerator StartLevelUpCutIn()
     {
-        levelUp.SetActive(true);
+        // LevelUp のカットインを生成
+        GameObject lU = GenerateCutIn(levelUp);
 
         // LevelUpの効果音を流す
         soundM.PlaySFX(1);
 
         yield return new WaitForSeconds(1.4f);
 
-        levelUp.SetActive(false);
+        // LevelUp のカットインを削除
+        Destroy(lU);
     }
 
     // カットイン処理；GameOverの文字を出す
@@ -156,7 +158,8 @@ public class PerformanceManager_Stage : MonoBehaviour
     {
         playingCutIn = true;
 
-        gameOver01.SetActive(true);
+        // GameOver01 のカットインを生成
+        GameObject gO01 = GenerateCutIn(gameOver01);
 
         // GameOverの効果音を流す
         soundM.PlaySFX(2);
@@ -166,8 +169,11 @@ public class PerformanceManager_Stage : MonoBehaviour
 
         yield return new WaitForSeconds(1.0f);
 
-        gameOver01.SetActive(false);
-        gameOver02.SetActive(true);
+        // GameOver01 のカットインを削除
+        Destroy(gO01);
+
+        // GameOver02 のカットインを生成
+        GameObject gO02 = GenerateCutIn(gameOver02);
 
         yield return new WaitForSeconds(1.0f);
 
@@ -238,6 +244,15 @@ public class PerformanceManager_Stage : MonoBehaviour
             leftStar.transform.eulerAngles  = new Vector3(0, 0, 135.0f);
             rightStar.transform.eulerAngles = new Vector3(0, 0, -45.0f);
         }
+    }
+
+    // カットインを生成
+    GameObject GenerateCutIn(GameObject cutInPrefab)
+    {
+        GameObject gao = Instantiate(cutInPrefab) as GameObject;
+        gao.transform.SetParent(cutInParent.transform, false);
+
+        return gao;
     }
 
     public bool PlayingCutIn

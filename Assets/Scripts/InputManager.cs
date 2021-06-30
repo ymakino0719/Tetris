@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class InputManager : MonoBehaviour
 {
-    // キー入力操作を有効にするか（無効の場合、タッチ操作になる）
-    bool keyInputControl = true;
+    // タッチ入力操作を有効にするか（無効の場合、キー操作になる）
+    static bool touchInputControl = true;
 
     // キー入力をしたとき press に true を、押し続けているときに pressing に true を代入
     bool upKey_Press = false;
@@ -29,7 +29,7 @@ public class InputManager : MonoBehaviour
     string leftKey = "LeftKey";
     string rightKey = "RightKey";
 
-    /*
+    
     // 【タッチ操作】
     // 画面にタッチされた指の中でもっとも古いタッチのFingerIDが操作権を持つようにする（初期値はタッチがないため -1）
     int controlFingerId = -1;
@@ -40,16 +40,20 @@ public class InputManager : MonoBehaviour
     // タッチ入力があるかどうか
     bool touching = false;
 
+    // タッチ入力による操作が可能な状態かどうか
+    bool control = false;
+
     // タッチ入力中に移動（操作）があったかどうか
     bool moved = false;
 
     // フリック操作を検知する閾値（フリックされた瞬間の距離で判定）
-    float flickOperationThreshold = 0.5f;
+    float flickOperationThreshold = 60.0f;
 
     // スワイプ操作を検知する閾値（スワイプされた総距離で判定）
-    float swipeOperationThreshold = 1.0f;
-    */
+    float swipeOperationThreshold = 60.0f;
+    
 
+    /*
     // 【クリック操作】
     // クリック押し込みの最初の座標
     Vector3 startPos = Vector3.zero;
@@ -61,15 +65,26 @@ public class InputManager : MonoBehaviour
     bool moved = false;
 
     // フリック操作を検知する閾値（フリックされた瞬間の距離で判定）
-    float flickOperationThreshold = 20.0f;
+    float flickOperationThreshold = 30.0f;
 
     // スワイプ操作を検知する閾値（スワイプされた総距離で判定）
-    float swipeOperationThreshold = 10.0f;
+    float swipeOperationThreshold = 50.0f;
+    */
+
 
     // Update is called once per frame
     void Update()
     {
-        if(keyInputControl)
+        if(touchInputControl)
+        {
+            //【マウス操作】
+            //CheckInputFromMouse();
+
+            // 【Touch】
+            // 操作権限のあるタッチによる操作の場合且つ操作可能な状態であるとき、タッチ操作を開始する
+            if (CheckThisTouchIsAuthorizedToOperate() && control) DetectTouchingOperation();
+        }
+        else
         {
             //【キー入力操作】
             // 上下左右キー入力受付
@@ -84,15 +99,6 @@ public class InputManager : MonoBehaviour
             // ハードドロップキー入力受付
             CheckPressHardDropKey();
         }
-        else
-        {
-            //【マウス操作】
-            CheckInputFromMouse();
-        }
-
-        // 【Touch】
-        // 操作権限のあるタッチによる操作の場合、タッチ操作を開始する
-        //if (CheckThisTouchIsAuthorizedToOperate()) DetectTouchingOperation();
     }
 
     // ボタンを押しているかの確認
@@ -121,7 +127,7 @@ public class InputManager : MonoBehaviour
         if (Input.GetButtonDown("HardDropKey")) hardDropKey_Press = true;
     }
 
-    /*
+    
     // 操作権限のあるタッチがあるかどうか確認する（最も最初に触れた指がまだ画面上にあるかどうか）
     bool CheckThisTouchIsAuthorizedToOperate()
     {
@@ -140,6 +146,7 @@ public class InputManager : MonoBehaviour
                 // 最初に触れた指の最初の座標を取得
                 startPos = touch.position;
                 touching = true;
+                control = true;
             }
 
             // 今画面に触れている指の中で最も最初に触れた指が、操作権を持つ指かどうか
@@ -154,8 +161,12 @@ public class InputManager : MonoBehaviour
                 // 今画面上にある最も最初に触れた指に操作権を移行させ、次フレームから操作可能とする
                 controlFingerId = touch.fingerId;
 
+                // 操作権が移るとき、操作は可能な状態となる
+                control = true;
+
                 // 指が離れた時、移動がなかった場合はタップ操作とみなし、回転入力として受け付ける
                 if (!moved) upKey_Press = true;
+                moved = false;
 
                 // 最初の座標を更新
                 startPos = touch.position;
@@ -165,9 +176,11 @@ public class InputManager : MonoBehaviour
         {
             // すべての指が画面から離れた時
             touching = false;
+            control = false;
 
             // 指が離れた時、移動がなかった場合はタップ操作とみなし、回転入力として受け付ける
             if (!moved) upKey_Press = true;
+            moved = false;
 
             controlFingerId = -1;
             startPos = Vector3.zero;
@@ -185,6 +198,8 @@ public class InputManager : MonoBehaviour
         {
             // 移動したので true
             moved = true;
+            // フリック操作をした指は、指が離れるまでその他の操作はできないようにする
+            control = false;
             // フリック有効時、以下の入力をスキップ
             return;
         } 
@@ -264,8 +279,8 @@ public class InputManager : MonoBehaviour
 
         return swipe;
     }
-    */
-
+    
+    /*
     // マウスからの入力を確認する
     void CheckInputFromMouse()
     {
@@ -365,9 +380,10 @@ public class InputManager : MonoBehaviour
 
         return swipe;
     }
+    */
 
     // UIボタンからのキー入力
-    // ボタンが押されたとき、単押し・長押し双方とも true を代入
+    // 方向キー：ボタンが押されたとき、単押し・長押し双方とも true を代入
     public void PointerDown_UpKey()
     {
         upKey_Press = true;
@@ -387,6 +403,16 @@ public class InputManager : MonoBehaviour
     {
         rightKey_Press = true;
         rightKey_Pressing = true;
+    }
+
+    // その他のキー（ホールド、ハードドロップ）：ボタンが押されたとき、単押しに true を代入
+    public void PointerDown_HoldKey()
+    {
+        holdKey_Press = true;
+    }
+    public void PointerDown_HardDropKey()
+    {
+        hardDropKey_Press = true;
     }
 
     // ボタンを離したとき、長押しboolに false を代入
@@ -410,7 +436,7 @@ public class InputManager : MonoBehaviour
     // キー入力かタッチ操作かを切り替える
     public void ToggleKeyOrTouch()
     {
-        keyInputControl = !keyInputControl;
+        touchInputControl = !touchInputControl;
     }
     public bool UpKey_Press
     {
@@ -461,9 +487,9 @@ public class InputManager : MonoBehaviour
         set { hardDropKey_Press = value; }
         get { return hardDropKey_Press; }
     }
-    public bool KeyInputControl
+    public bool TouchInputControl
     {
-        set { keyInputControl = value; }
-        get { return keyInputControl; }
+        set { touchInputControl = value; }
+        get { return touchInputControl; }
     }
 }

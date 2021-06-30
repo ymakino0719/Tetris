@@ -5,15 +5,15 @@ using UnityEngine;
 public class BackgroundBehavior : MonoBehaviour
 {
     // 背景画像の数
-    [SerializeField] static int backgroundNum = 2;
+    [SerializeField] static int backgroundNum = 3;
     // 現在の背景画像番号（初期値は0）
     int currentBackgroundNum = 0;
 
     // スクロールで動かすGameObject
-    [SerializeField] GameObject[] sGao = new GameObject[backgroundNum];
+    [SerializeField] GameObject[] sGao = new GameObject[2];
 
     // スクロールで動かすGameObjectにアタッチされているSprite Renderer
-    [SerializeField] SpriteRenderer[] sRen = new SpriteRenderer[backgroundNum];
+    [SerializeField] SpriteRenderer[] sRen = new SpriteRenderer[2];
 
     [SerializeField] Sprite[] sSpr = new Sprite[backgroundNum];
 
